@@ -16,7 +16,7 @@ func TestDiagonalDifference(t *testing.T) {
 	)
 
 	if get := diagonalDifference(input); get != expect {
-		t.Errorf("Expect %v, but %v.", 15, get)
+		t.Errorf("Expect %v, but %v.", expect, get)
 	}
 }
 
