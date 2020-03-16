@@ -20,15 +20,10 @@ func TestDiagonalDifference(t *testing.T) {
 	}
 }
 
-/*
- * Complete the 'diagonalDifference' function below.
- *
- * The function is expected to return an INTEGER.
+/* The function is expected to return an INTEGER.
  * The function accepts 2D_INTEGER_ARRAY arr as parameter.
  */
-
 func diagonalDifference(arr [][]int32) int32 {
-	// Write your code here
 	n := len(arr)
 	var left, right int32
 
