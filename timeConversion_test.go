@@ -17,7 +17,7 @@ func TestTimeConversion(t *testing.T) {
 		[2]string{"00:00:00PM", "12:00:00"},
 		[2]string{"12:00:00AM", "00:00:00"},
 		[2]string{"12:00:00PM", "12:00:00"},
-		[2]string{"12:45:54PM", "12:45:54"}, // Is this a valid time?
+		[2]string{"12:45:54PM", "12:45:54"}, // Testcase 4
 	}
 
 	for _, tc := range tt {
