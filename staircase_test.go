@@ -7,7 +7,7 @@ import (
 )
 
 func TestStaircase(t *testing.T) {
-	//staircase(6)
+	staircase(6)
 }
 
 // Complete the plusMinus function below.
