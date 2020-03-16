@@ -6,7 +6,7 @@ import (
 )
 
 func TestBirthdayCakeCandles(t *testing.T) {
-	input := []int32{3, 2, 1, 3}
+	input := []int32{3, 2, 1, 3} //Example 0
 	//We have one candle of height 1, one candle of height 2, and
 	//two candles of height 3. Your niece only blows out the tallest
 	//candles, meaning the candles where height = 3. Because there
