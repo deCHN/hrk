@@ -20,7 +20,7 @@ func countApplesAndOranges(s int32, t int32, a int32, b int32, apples []int32, o
 	}
 
 	for _, db := range oranges {
-		if b-db >= s && b-db <= t {
+		if b+db >= s && b+db <= t {
 			orange++
 		}
 	}
