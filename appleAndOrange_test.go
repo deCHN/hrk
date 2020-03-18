@@ -2,21 +2,28 @@ package hrk
 
 import "testing"
 
-func TestApplesAndOranges(t *testing.T) {
-	const (
-		houseLeft  int32 = 7
-		houseRight int32 = 11
-		appleTree  int32 = 5
-		orangeTree int32 = 15
-	)
-	apples := []int32{-2, 2, 1}
-	oranges := []int32{5, -6}
+func TestCountApplesAndOranges(t *testing.T) {
 
-	if apple, orange := countApplesAndOranges(houseLeft, houseRight, appleTree, orangeTree, apples, oranges); apple != 1 || orange != 1 {
+	if apple, orange := countApplesAndOranges(7, 11, 5, 15, []int32{-2, 2, 1}, []int32{5, -6}); apple != 1 || orange != 1 {
 		t.Errorf("Expect apple 1 orange 1, but apple %v orange %v.", apple, orange)
 	}
 }
 
-func countApplesAndOranges(s int32, t int32, a int32, b int32, apples []int32, oranges []int32) (apple, orange int) {
-	return 1, 1
+//takes (houseLeft, houseRight, appleTree, orangeTree, applesDistance, orangesDistance)
+func countApplesAndOranges(s int32, t int32, a int32, b int32, apples []int32, oranges []int32) (int, int) {
+	var apple, orange int
+
+	for _, da := range apples {
+		if a+da >= s && a+da <= t {
+			apple++
+		}
+	}
+
+	for _, db := range oranges {
+		if b-db >= s && b-db <= t {
+			orange++
+		}
+	}
+
+	return apple, orange
 }
