@@ -1,29 +1,62 @@
 package hrk
 
-import "testing"
+import (
+	"sort"
+	"testing"
+)
 
 func TestGetTotalX(t *testing.T) {
 
-	a := []int32{2, 4}
-	b := []int32{16, 32, 96}
+	a := [][]int32{
+		[]int32{2, 4},
+		[]int32{3, 4},
+		[]int32{1},
+	}
+	b := [][]int32{
+		[]int32{16, 32, 96},
+		[]int32{24, 48},
+		[]int32{100},
+	}
 
-	expect := int32(3)
+	expect := []int32{3, 2, 9}
 
-	if get := getTotalX(a, b); get != expect {
-		t.Fail()
+	for k, exp := range expect {
+		if get := getTotalX(a[k], b[k]); get != exp {
+			t.Fail()
+		}
 	}
 }
 
 func getTotalX(a []int32, b []int32) int32 {
 	//x % a[i] -> 0
 	//b[i] % x -> 0
+	sort.SliceStable(b, func(i int, j int) bool {
+		return b[i] > b[j]
+	})
 
-	return 0
+	var n int32
+	for x := int32(1); x <= b[0]; x++ {
+		if isMultipleOf(x, a) && isFactorOf(x, b) {
+			n++
+		}
+	}
+
+	return n
 }
 
-func isFactorOf(f int32, fc []int32) bool {
+func isMultipleOf(x int32, fc []int32) bool {
 	for _, v := range fc {
-		if v%f != 0 {
+		if x%v != 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
+func isFactorOf(x int32, fc []int32) bool {
+	for _, v := range fc {
+		if v%x != 0 {
 			return false
 		}
 	}
