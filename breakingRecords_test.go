@@ -21,5 +21,21 @@ func TestBreakingRecords(t *testing.T) {
 }
 
 func breakingRecords(scores []int32) [2]int32 {
-	return nil
+	min := scores[0]
+	max := scores[0]
+
+	var high, low int32
+
+	for _, v := range scores {
+		if v < min {
+			low++
+			min = v
+		}
+		if v > max {
+			high++
+			max = v
+		}
+	}
+
+	return [2]int32{high, low}
 }
