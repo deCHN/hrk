@@ -25,5 +25,41 @@ func TestBirthday(t *testing.T) {
 }
 
 func birthday(s []int32, d int32, m int32) int32 {
+
+	for k, v := s {
+		
+	}
 	return 0
+}
+
+func cut(s []int32, d int32, m int32, n int32, sum int32) bool{
+
+	if len(s) = 0 {
+		return false
+	}
+
+	if n > m {
+		return  false
+	}
+
+	for k, v := range s {
+		days := sum + v
+
+		if days > d {
+			return false
+		}
+
+		if days < d && n < m {
+			si := append([]int32(nil), s[:k], s[k+1:])
+			cut(si, d, m ,n++, days)
+		}
+		if days < d && n == m {
+			return false
+		}
+		if days == d && n == m {
+			return true
+		}
+		if n < m {
+		}
+	}
 }
