@@ -1,6 +1,8 @@
 package hrk
 
-import "testing"
+import (
+	"testing"
+)
 
 type testdata struct {
 	n, k   int32
@@ -10,6 +12,7 @@ type testdata struct {
 
 func TestDivisiableSumPairs(t *testing.T) {
 	tt := []testdata{
+		{n: 5, k: 2, ar: []int32{5, 9, 10, 7, 4}, expect: 4}, //Testcase 2
 		{n: 6, k: 3, ar: []int32{1, 3, 2, 6, 1, 2}, expect: 5},
 		{n: 6, k: 5, ar: []int32{1, 2, 3, 4, 5, 6}, expect: 3},
 		{n: 1, k: 2, ar: []int32{1}, expect: 0},
@@ -17,7 +20,6 @@ func TestDivisiableSumPairs(t *testing.T) {
 		{n: 3, k: 1, ar: []int32{1, 2, 3}, expect: 3},
 		{n: 3, k: 100, ar: []int32{1, 2, 3}, expect: 0},
 		{n: 3, k: 100, ar: []int32{100, 100, 100}, expect: 3},
-		{n: 5, k: 2, ar: []int32{5, 9, 10, 7, 4}, expect: 4}, //Testcase 2
 		{n: 100, k: 67, ar: []int32{
 			57, 46, 3, 24, 53, 30, 53, 90, 50, 44,
 			80, 33, 55, 37, 97, 37, 82, 33, 80, 97,
@@ -41,7 +43,7 @@ func TestDivisiableSumPairs(t *testing.T) {
 			48, 93, 64, 44, 50, 91, 44, 17, 63, 27,
 			3, 65, 75, 19, 68, 30, 43, 37, 72, 54,
 			82, 92, 37, 52, 72, 62, 3, 88, 82, 71,
-		}, expect: 216}, //Testcase 2
+		}, expect: 216}, //Testcase 6
 	}
 
 	for _, tc := range tt {
@@ -55,8 +57,9 @@ func divisibleSumPairs(n int32, k int32, ar []int32) int32 {
 	pairs := 0
 
 	for index, v := range ar {
-		for scan := int32(1); scan < n-int32(index); scan++ {
+		for scan := int32(index + 1); scan < n; scan++ {
 			if (v+ar[scan])%k == 0 {
+				//fmt.Println(v, "+", ar[scan], "%", k)
 				pairs++
 			}
 		}
