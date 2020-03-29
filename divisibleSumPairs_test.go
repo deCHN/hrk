@@ -17,6 +17,7 @@ func TestDivisiableSumPairs(t *testing.T) {
 		{n: 3, k: 1, ar: []int32{1, 2, 3}, expect: 3},
 		{n: 3, k: 100, ar: []int32{1, 2, 3}, expect: 0},
 		{n: 3, k: 100, ar: []int32{100, 100, 100}, expect: 3},
+		{n: 5, k: 2, ar: []int32{5, 9, 10, 4, 7}, expect: 4}, //Testcase 2
 	}
 
 	for _, tc := range tt {
