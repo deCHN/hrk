@@ -1,6 +1,9 @@
 package hrk
 
-import "testing"
+import (
+	"sort"
+	"testing"
+)
 
 type testData struct {
 	arr    []int32
@@ -18,9 +21,37 @@ func TestMigratoryBirds(t *testing.T) {
 			t.Errorf("Expect %v, but %v.\n", td.expect, get)
 		}
 	}
-
 }
 
 func migratoryBirds(arr []int32) int32 {
-	return 0
+	signing := make(map[int32]int)
+
+	for _, v := range arr {
+		signing[v]++
+	}
+
+	//Constraints type is max 5
+	values := make([]int, 5)
+
+	for _, v := range signing {
+		values = append(values, v)
+	}
+
+	sort.SliceStable(values, func(i int, j int) bool {
+		return values[i] > values[j]
+	})
+
+	var most int
+	if len(values) > 0 {
+		most = values[0]
+	}
+
+	bird := int32(100)
+	for k, v := range signing {
+		if v == most && k < bird {
+			bird = k
+		}
+	}
+
+	return bird
 }
