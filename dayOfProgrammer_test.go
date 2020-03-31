@@ -47,6 +47,12 @@ func dayOfProgrammer(year int32) string {
 	return fmt.Sprintf("%02d.%02d.%d", day, month, year)
 }
 
+// From 1700 to 1917, Russia's official calendar was the Julian calendar;
+// since 1919 they used the Gregorian calendar system.
 func isLeapYear(year int32) bool {
-	return year%4 == 0
+	if year < 1919 {
+		return year%4 == 0
+	} else {
+		return year%4 == 0 && year%100 != 0
+	}
 }
