@@ -19,6 +19,25 @@ func TestSockMerchant(t *testing.T) {
 	}
 }
 
+// Constraints:
+// 1 < n < 100
+// 1 <= ar[i] <=100 where 0 <= i <= n
 func sockMerchant(n int32, ar []int32) int32 {
+	pairs := [101]int32{}
 
+	for _, v := range ar {
+		if pairs[v] == 0 {
+			pairs[v] = 1
+		} else {
+			pairs[v] = 0
+		}
+	}
+
+	var sum int32
+
+	for _, v := range pairs {
+		sum += v
+	}
+
+	return (n - sum) / 2
 }
