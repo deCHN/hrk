@@ -21,5 +21,15 @@ func TestMoneySpent(t *testing.T) {
 }
 
 func getMoneySpent(keyboards []int32, drives []int32, b int32) int32 {
-	return 0
+	max := int32(-1)
+
+	for _, keyboard := range keyboards {
+		for _, drive := range drives {
+			if sum := keyboard + drive; sum <= b && sum > max {
+				max = sum
+			}
+		}
+	}
+
+	return max
 }
