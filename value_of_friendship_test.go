@@ -13,15 +13,24 @@ import "testing"
 **/
 
 func TestValueOfFriendship(t *testing.T) {
-	input := [][]int32{
-		[]int32{5, 4},
-		[]int32{1, 2},
-		[]int32{3, 2},
-		[]int32{4, 2},
-		[]int32{4, 3},
+	td := []struct {
+		n      int32
+		fs     [][]int32
+		expect int32
+	}{
+		{5, [][]int32{
+			[]int32{1, 2},
+			[]int32{3, 2},
+			[]int32{4, 2},
+			[]int32{4, 3},
+		}, 32},
 	}
 
-	expect := 32
+	for _, v := range td {
+		if get := valueOfFriendsship(v.n, v.fs); get != v.expect {
+			t.Errorf("Given %v, expect %v, but %v.", v, v.expect, get)
+		}
+	}
 }
 
 /**
