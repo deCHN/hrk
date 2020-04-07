@@ -44,7 +44,8 @@ func valueOfFriendsship(n int32, friendships [][]int32) int32 {
 	students := students{}
 
 	for i := int32(1); i <= n; i++ {
-		students = append(students, &student{id: i})
+		m := make(map[int32]bool)
+		students = append(students, &student{id: i, fl: m})
 	}
 
 	total := int32(0)
@@ -53,7 +54,7 @@ func valueOfFriendsship(n int32, friendships [][]int32) int32 {
 		total += students.getTotal()
 	}
 
-	return 0
+	return total
 }
 
 type students []*student
@@ -77,10 +78,13 @@ func (ss students) getStudent(id int32) *student {
 
 type student struct {
 	id int32
-	fc int32   // friends count
-	fl []int32 // list of friends' ids
+	fc int32          // friends count
+	fl map[int32]bool // list of friends' ids
 }
 
 func (s *student) makeFriend(target *student) {
-
+	if !s.fl[target.id] {
+		s.fc++
+	}
+	s.fl[target.id] = true
 }
