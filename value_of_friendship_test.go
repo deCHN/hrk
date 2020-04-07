@@ -47,7 +47,7 @@ func valueOfFriendsship(n int32, friendships [][]int32) int32 {
 
 	groups := []group{}
 
-	total := 0
+	total := int32(0)
 
 	for _, v := range friendships {
 		found := false
@@ -55,7 +55,7 @@ func valueOfFriendsship(n int32, friendships [][]int32) int32 {
 			if g[v[0]] || g[v[1]] {
 				g[v[0]] = true
 				g[v[1]] = true
-				total += len(g) * (len(g) - 1)
+				total += int32(len(g) * (len(g) - 1))
 				found = true
 			}
 		}
@@ -70,5 +70,5 @@ func valueOfFriendsship(n int32, friendships [][]int32) int32 {
 		fmt.Println(v, "total:", total, "groups:", groups)
 	}
 
-	return int32(total)
+	return total
 }
