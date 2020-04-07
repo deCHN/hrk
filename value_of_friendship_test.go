@@ -50,7 +50,7 @@ func valueOfFriendsship(n int32, friendships [][]int32) int32 {
 
 	total := int32(0)
 	for _, m := range friendships {
-		students.getStudent(m[0]).makeFriend(students.getStudent(m[1]))
+		students.getStudent(m[0]).makeFriend(students.getStudent(m[1]), students)
 		total += students.getTotal()
 	}
 
@@ -82,9 +82,23 @@ type student struct {
 	fl map[int32]bool // list of friends' ids
 }
 
-func (s *student) makeFriend(target *student) {
+func (s *student) makeFriend(target *student, ss students) {
 	if !s.fl[target.id] {
 		s.fc++
+		for k, _ := range s.fl {
+			ss.getStudent(k).fc++
+		}
 	}
 	s.fl[target.id] = true
+}
+
+type group []int32
+
+func (g group) has(id int32) bool {
+	for _, v := range g {
+		if v == id {
+			return true
+		}
+	}
+	return false
 }
