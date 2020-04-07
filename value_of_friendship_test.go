@@ -40,5 +40,47 @@ func TestValueOfFriendship(t *testing.T) {
 * Each of the m subsequent lines contains two space-separated integers describing the respective values of x and y (where x != y) describing a friendship between student x and student y.
  */
 func valueOfFriendsship(n int32, friendships [][]int32) int32 {
+
+	students := students{}
+
+	for i := int32(1); i <= n; i++ {
+		students = append(students, &student{id: i})
+	}
+
+	total := int32(0)
+	for _, m := range friendships {
+		students.getStudent(m[0]).makeFriend(students.getStudent(m[1]))
+		total += students.getTotal()
+	}
+
 	return 0
+}
+
+type students []*student
+
+func (ss students) getTotal() int32 {
+	total := int32(0)
+	for _, s := range ss {
+		total += s.fc
+	}
+	return total
+}
+
+func (ss students) getStudent(id int32) *student {
+	for _, v := range ss {
+		if v.id == id {
+			return v
+		}
+	}
+	return nil
+}
+
+type student struct {
+	id int32
+	fc int32   // friends count
+	fl []int32 // list of friends' ids
+}
+
+func (s *student) makeFriend(target *student) {
+
 }
