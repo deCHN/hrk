@@ -1,6 +1,9 @@
-package hrk
+package hrk_test
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 /**
 *You're researching friendships between groups of n new college students where each student is distinctly numbered from 1 to n. At the beginning of the semester, no student knew any other student; instead, they met and formed individual friendships as the semester went on. The friendships between students are:
@@ -40,65 +43,32 @@ func TestValueOfFriendship(t *testing.T) {
 * Each of the m subsequent lines contains two space-separated integers describing the respective values of x and y (where x != y) describing a friendship between student x and student y.
  */
 func valueOfFriendsship(n int32, friendships [][]int32) int32 {
+	type group map[int32]bool
 
-	students := students{}
+	groups := []group{}
 
-	for i := int32(1); i <= n; i++ {
-		m := make(map[int32]bool)
-		students = append(students, &student{id: i, fl: m})
-	}
+	total := 0
 
-	total := int32(0)
-	for _, m := range friendships {
-		students.getStudent(m[0]).makeFriend(students.getStudent(m[1]), students)
-		total += students.getTotal()
-	}
-
-	return total
-}
-
-type students []*student
-
-func (ss students) getTotal() int32 {
-	total := int32(0)
-	for _, s := range ss {
-		total += s.fc
-	}
-	return total
-}
-
-func (ss students) getStudent(id int32) *student {
-	for _, v := range ss {
-		if v.id == id {
-			return v
+	for _, v := range friendships {
+		found := false
+		for _, g := range groups {
+			if g[v[0]] || g[v[1]] {
+				g[v[0]] = true
+				g[v[1]] = true
+				total += len(g) * (len(g) - 1)
+				found = true
+			}
 		}
-	}
-	return nil
-}
-
-type student struct {
-	id int32
-	fc int32          // friends count
-	fl map[int32]bool // list of friends' ids
-}
-
-func (s *student) makeFriend(target *student, ss students) {
-	if !s.fl[target.id] {
-		s.fc++
-		for k, _ := range s.fl {
-			ss.getStudent(k).fc++
+		if !found {
+			m := make(map[int32]bool)
+			m[v[0]] = true
+			m[v[1]] = true
+			groups = append(groups, m)
+			total += 2
 		}
-	}
-	s.fl[target.id] = true
-}
 
-type group []int32
-
-func (g group) has(id int32) bool {
-	for _, v := range g {
-		if v == id {
-			return true
-		}
+		fmt.Println(v, "total:", total, "groups:", groups)
 	}
-	return false
+
+	return int32(total)
 }
