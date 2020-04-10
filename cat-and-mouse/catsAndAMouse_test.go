@@ -1,7 +1,10 @@
 package hrk_test
 
 import (
+	"bufio"
+	"encoding/csv"
 	"math"
+	"os"
 	"sort"
 	"testing"
 )
@@ -20,6 +23,36 @@ func TestCatAndMouse(t *testing.T) {
 			t.Errorf("Given %v, expect %v, but %v.", v, v.expect, get)
 		}
 	}
+}
+
+func TestCatAndMouseFromQueries(t *testing.T) {
+	f, err := os.Open("./input01.txt")
+	if err != nil {
+		t.Error(err)
+	}
+	defer f.Close()
+
+	r := csv.NewReader(f)
+	r.Comma = ' '
+	r.FieldsPerRecord = -1
+
+	inputs, err := r.ReadAll()
+	if err != nil {
+		t.Error(err)
+	}
+
+	f1, err := os.Open("./output01.txt")
+	if err != nil {
+		t.Error(err)
+	}
+	defer f1.Close()
+
+	outputs := bufio.NewReader(f1)
+
+	for _, out := range outputs.ReadLine() {
+
+	}
+
 }
 
 func catAndMouse(x int32, y int32, z int32) string {
