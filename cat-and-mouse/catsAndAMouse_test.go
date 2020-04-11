@@ -1,21 +1,18 @@
-package hrk_test
-
-import (
-	"bufio"
-	"encoding/csv"
-	"math"
-	"os"
-	"sort"
+]c]c]
+	"strconv"
+	"strings"
 	"testing"
 )
 
-func TestCatAndMouse(t *testing.T) {
+func TestCatAndMouse1(t *testing.T) {
 	tests := []struct {
 		x, y, z int32
 		expect  string
 	}{
-		{1, 2, 3, "Cat B"},
-		{1, 3, 2, "Mouse C"},
+		//{1, 2, 3, "Cat B"},
+		//{1, 3, 2, "Mouse C"},
+		{16, 16, 16, "Mouse C"},
+		{1, 1, 16, "Mouse C"},
 	}
 
 	for _, v := range tests {
@@ -41,6 +38,8 @@ func TestCatAndMouseFromQueries(t *testing.T) {
 		t.Error(err)
 	}
 
+	inputs = inputs[1:] //Ignore the first line
+
 	f1, err := os.Open("./output01.txt")
 	if err != nil {
 		t.Error(err)
@@ -49,21 +48,32 @@ func TestCatAndMouseFromQueries(t *testing.T) {
 
 	outputs := bufio.NewReader(f1)
 
-	for _, out := range outputs.ReadLine() {
+	for i := 0; i < len(inputs); i++ {
+		want, err := outputs.ReadString('\n')
+		if err != nil {
+			t.Error(err)
+		}
+		want = strings.TrimRight(want, "\n")
 
+		x, _ := strconv.Atoi(inputs[i][0])
+		y, _ := strconv.Atoi(inputs[i][1])
+		z, _ := strconv.Atoi(inputs[i][2])
+
+		if get := catAndMouse(int32(x), int32(y), int32(z)); get != want {
+			t.Errorf("Given: %v, want: %v, but: %v.", inputs[i], want, get)
+		}
 	}
-
 }
 
 func catAndMouse(x int32, y int32, z int32) string {
+	if x == y {
+		return "Mouse C"
+	}
 	if x == z {
 		return "Cat A"
 	}
 	if y == z {
 		return "Cat B"
-	}
-	if x == z && y == z {
-		return "Mouse C"
 	}
 
 	p := [3]int32{x, y, z}
