@@ -16,8 +16,8 @@ func TestCatAndMouse1(t *testing.T) {
 		x, y, z int32
 		expect  string
 	}{
-		//{1, 2, 3, "Cat B"},
-		//{1, 3, 2, "Mouse C"},
+		{1, 2, 3, "Cat B"},
+		{1, 3, 2, "Mouse C"},
 		{16, 16, 16, "Mouse C"},
 		{1, 1, 16, "Mouse C"},
 	}
