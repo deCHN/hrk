@@ -1,6 +1,9 @@
 package hrk_test
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 func TestFormingMagicSquare(t *testing.T) {
 
@@ -19,8 +22,28 @@ func TestFormingMagicSquare(t *testing.T) {
 			{8, 1, 5}, //{8, 1, 6}, -> |5 - 6| = 1
 		}, 1}, // 0 + 0 + 1 = 1
 	}
+
+	for _, v := range tests {
+		if get := formingMagicSquare(v.s); get != v.want {
+			t.Errorf("Given %v, want %v, but %v.", v, v.want, get)
+		}
+	}
 }
 
 func formingMagicSquare(s [][]int32) int32 {
+	sum := int32(0)
+	for _, v := range s {
+		sum += row(v...)
+	}
 
+	return sum
+}
+
+func row(ns ...int32) int32 {
+	sum := int32(0)
+	for _, v := range ns {
+		sum += v
+	}
+
+	return int32(math.Abs(float64(sum - 15)))
 }
