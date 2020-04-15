@@ -2,6 +2,8 @@ package main_test
 
 import "testing"
 
+//https://www.hackerrank.com/contests/moodys-analytics-2018-university-codesprint/challenges/short-trade-transaction/problem
+
 /*
 * You need to borrow exactly _a_ units of shares from the market. To do so, you
 * visit _m_ market participants one by one and ask them to lend you the remaining
