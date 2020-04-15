@@ -44,7 +44,7 @@ func formingMagicSquare(s [][]int32) int32 {
 
 	//cover from two dimentions to one for easy calculate
 	covert := func(s [][]int32) []int32 {
-		ret := make([]int32, 9)
+		ret := make([]int32, 0, 9)
 		for _, v := range s {
 			ret = append(ret, v...)
 		}
@@ -59,7 +59,7 @@ func formingMagicSquare(s [][]int32) int32 {
 			[9]int32{2, 7, 6, 9, 5, 1, 4, 3, 8}, //mirrow of last one
 			[9]int32{8, 1, 6, 3, 5, 7, 4, 9, 2}, //rotate 90 degrees of third one
 			[9]int32{6, 1, 8, 7, 5, 3, 2, 9, 4}, //mirrow of last one
-			[9]int32{4, 3, 8, 9, 5, 1, 2, 7, 6}, //rotate 90 degrees of third one
+			[9]int32{4, 3, 8, 9, 5, 1, 2, 7, 6}, //rotate 90 degrees of fifth one
 			[9]int32{8, 3, 4, 1, 5, 9, 6, 7, 2}, //mirrow of last one
 		}
 
@@ -69,6 +69,7 @@ func formingMagicSquare(s [][]int32) int32 {
 			for k, v := range sqr {
 				sum += math.Abs(float64(s[k] - v))
 			}
+			//fmt.Printf("With %v, cost is %v.\n", sqr, sum)
 			if sum < cost {
 				cost = sum
 			}
