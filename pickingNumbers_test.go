@@ -34,10 +34,26 @@ func pickingNumbers(a []int32) int32 {
 	diff := func(s []int32, v0 int32) int {
 		for k, v := range s {
 			s[k] = v - v0
+		} //v0 = 3 -> {-2, 0, 0, 1, 2, 3},
+
+		il, ir := len(s), 0 //index left / right
+		for k, v := range s {
+			if v >= -1 {
+				il = k
+				break
+			}
+		} // il = 1
+
+		for k, v := range s {
+			if v < 2 {
+				continue
+			}
+			ir = k - 1
+		} // ir = 3
+
+		if d := ir - il; d >= 0 {
+			return d + 1 //2
 		}
-		//v0 = 3 -> {-2, 0, 0, 1, 2, 3},
-		//TODO: find first index of -1 or 0
-		//TODO: find last index of 0 or 1
 
 		return 0
 	}
@@ -46,7 +62,9 @@ func pickingNumbers(a []int32) int32 {
 	for _, v0 := range a {
 		s := make([]int32, 0)
 		copy(s, a)
-		diff(s, v0)
+		if d := diff(s, v0); max < d {
+			max = d
+		}
 	}
 
 	return int32(max)
