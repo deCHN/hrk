@@ -36,31 +36,33 @@ func pickingNumbers(a []int32) int32 {
 			s[k] = v - v0
 		} //v0 = 3 -> {-2, 0, 0, 1, 2, 3},
 
-		il, ir := len(s), 0 //index left / right
+		il, ir, left := len(s), 0, int32(0) //index left / right
 		for k, v := range s {
 			if v >= -1 {
 				il = k
+				left = v // left = 0
 				break
 			}
 		} // il = 1
 
 		for k, v := range s {
-			if v < 2 {
+			if v < left+2 {
 				continue
 			}
 			ir = k - 1
+			break
 		} // ir = 3
 
 		if d := ir - il; d >= 0 {
-			return d + 1 //2
+			return d + 1 // 3
 		}
 
-		return 0
+		return 1
 	}
 
-	// {1,2
+	size := len(a)
 	for _, v0 := range a {
-		s := make([]int32, 0)
+		s := make([]int32, size)
 		copy(s, a)
 		if d := diff(s, v0); max < d {
 			max = d
