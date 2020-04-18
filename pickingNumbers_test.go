@@ -10,6 +10,7 @@ func TestPickingNumbers(t *testing.T) {
 		a    []int32
 		want int32
 	}{
+		{[]int32{0, 0}, 2},
 		{[]int32{4, 6, 5, 3, 3, 1}, 3},
 		{[]int32{1, 2, 2, 3, 1, 2}, 5},
 		{[]int32{6, 6, 6, 6, 6, 6}, 6}, // testcase 6
@@ -34,7 +35,7 @@ func pickingNumbers(a []int32) int32 {
 			s[k] = v - v0
 		} //v0 = 3 -> {-2, 0, 0, 1, 2, 3},
 
-		il, ir, left := len(s), 0, int32(0) //index left / right, left(min) value of the set
+		il, ir, left := len(s), len(s)-1, int32(0) //index left / right, left(min) value of the set
 		for k, v := range s {
 			if v >= -1 {
 				il = k
