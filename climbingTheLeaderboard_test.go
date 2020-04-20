@@ -19,7 +19,7 @@ func TestClimbingLeaderBoard(t *testing.T) {
 
 		for k, s := range get {
 			if s != v.want[k] {
-				t.Errorf("Want %v, but %v.", v.want, s)
+				t.Errorf("Want %v, but %v.", v.want[k], s)
 			}
 		}
 	}
@@ -42,15 +42,20 @@ func climbingLeaderboard(scores []int32, alice []int32) []int32 {
 
 	rank := denseRank(scores)
 
-	ranking := make([]int32, len(alice))
+	var ranking []int32
 	for _, a := range alice {
+		i := 0
 		for score, r := range rank {
+			i++
 			if a > score {
 				if r == 1 {
 					ranking = append(ranking, 1)
 				} else {
 					ranking = append(ranking, int32(r-1))
 				}
+			}
+			if i == len(rank) {
+				ranking = append(ranking, int32(r+1))
 			}
 		}
 	}
