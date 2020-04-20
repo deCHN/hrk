@@ -7,7 +7,7 @@ func TestClimbingLeaderBoard(t *testing.T) {
 		scores, alice []int32
 		want          []int32
 	}{
-		{[]int32{100, 100, 50, 40, 40, 20, 10}, []int32{5, 25, 50, 120}, []int32{5, 25, 50, 120}},
+		{[]int32{100, 100, 50, 40, 40, 20, 10}, []int32{5, 25, 50, 120}, []int32{6, 4, 2, 1}},
 		{[]int32{100, 90, 90, 80, 75, 60}, []int32{50, 65, 77, 90, 102}, []int32{6, 5, 4, 2, 1}},
 	}
 
@@ -26,22 +26,34 @@ func TestClimbingLeaderBoard(t *testing.T) {
 }
 
 func climbingLeaderboard(scores []int32, alice []int32) []int32 {
-	denseRank := func(scores []int32) map[int]int32 {
-		rank := make(map[int]int32) // rank-value
+	denseRank := func(scores []int32) map[int32]int {
+		rank := make(map[int32]int) // score to rank map
 
-		//for k, v := range scores {
-		//if rank[v]
-
-		//}
-		return nil
+		i := 1 // Rank starts from 1
+		for _, score := range scores {
+			if _, ok := rank[score]; ok {
+				continue
+			}
+			rank[score] = i
+			i++
+		}
+		return rank
 	}
 
 	rank := denseRank(scores)
 
-	for k, v := range alice {
-
+	ranking := make([]int32, len(alice))
+	for _, a := range alice {
+		for score, r := range rank {
+			if a > score {
+				if r == 1 {
+					ranking = append(ranking, 1)
+				} else {
+					ranking = append(ranking, int32(r-1))
+				}
+			}
+		}
 	}
 
-	return nil
-
+	return ranking
 }
