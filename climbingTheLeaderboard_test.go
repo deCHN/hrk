@@ -1,7 +1,6 @@
 package hrk_test
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -32,10 +31,34 @@ func TestClimbingLeaderBoard(t *testing.T) {
 	}
 }
 
+// dense rank is a sort list with the index mapped to the rank
+// from high(best) to low.
+type denseRank []int32
+
+func (dr denseRank) getRanking(score int32) int32 {
+	rank := int32(-1)
+	for r, s := range dr {
+		if score > s {
+			if r == 0 {
+				rank = 1
+			} else {
+				rank = int32(r)
+			}
+		}
+	}
+
+	if rank == -1 {
+		rank = int32(len(dr) + 1)
+	}
+	return rank
+}
+
 func climbingLeaderboard(scores []int32, alice []int32) []int32 {
-	denseRank := func(scores []int32) []int32 {
+
+	dr := func(scores []int32) denseRank {
 		rank := make([]int32, len(scores)) // score indexed with rank
-		i := 1                             // Rank starts from 1
+
+		i := 1 // Rank starts from 1
 
 		for k, v := range scores {
 			scores[k] = v + 1 // To aviod 0 as score
@@ -66,25 +89,11 @@ func climbingLeaderboard(scores []int32, alice []int32) []int32 {
 		return rank
 	}
 
-	leaderBoard := denseRank(scores)
-	fmt.Println("leader board:", leaderBoard)
+	leaderBoard := dr(scores)
 
 	var ranking []int32
-	for _, points := range alice {
-		i := 0
-		for r, score := range leaderBoard {
-			i++
-			if points > score {
-				if r == 1 {
-					ranking = append(ranking, 1)
-				} else {
-					ranking = append(ranking, int32(r-1))
-				}
-			}
-			if i == len(leaderBoard) {
-				ranking = append(ranking, int32(r+1))
-			}
-		}
+	for _, score := range alice {
+		ranking = append(ranking, leaderBoard.getRanking(score))
 	}
 
 	return ranking
