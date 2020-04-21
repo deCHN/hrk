@@ -1,6 +1,9 @@
 package hrk_test
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestClimbingLeaderBoard(t *testing.T) {
 	tests := []struct {
@@ -17,35 +20,59 @@ func TestClimbingLeaderBoard(t *testing.T) {
 			t.Error("Get nil.")
 		}
 
+		if len(get) != len(v.want) {
+			t.Fatalf("Length doesn't match. Want %v, but %v.", len(v.want), len(get))
+		}
+
 		for k, s := range get {
 			if s != v.want[k] {
-				t.Errorf("Want %v, but %v.", v.want[k], s)
+				t.Errorf("Rank doesn't match. Want %v, but %v.", v.want[k], s)
 			}
 		}
 	}
 }
 
 func climbingLeaderboard(scores []int32, alice []int32) []int32 {
-	denseRank := func(scores []int32) map[int32]int {
-		rank := make(map[int32]int) // score to rank map
+	denseRank := func(scores []int32) []int32 {
+		rank := make([]int32, len(scores)) // score indexed with rank
+		i := 1                             // Rank starts from 1
 
-		i := 1 // Rank starts from 1
-		for _, score := range scores {
-			if _, ok := rank[score]; ok {
+		for k, v := range scores {
+			scores[k] = v + 1 // To aviod 0 as score
+		}
+
+		for k, score := range scores {
+			if k == 0 {
+				rank[0] = score
 				continue
 			}
-			rank[score] = i
+			if score == scores[k-1] {
+				continue
+			}
+			rank[i] = score
 			i++
 		}
+
+		// filter zero values away
+		n := 0
+		for _, x := range rank {
+			if x != 0 {
+				rank[n] = x
+				n++
+			}
+		}
+		rank = rank[:n]
+
 		return rank
 	}
 
-	rank := denseRank(scores)
+	leaderBoard := denseRank(scores)
+	fmt.Println("leader board:", leaderBoard)
 
 	var ranking []int32
 	for _, a := range alice {
 		i := 0
-		for score, r := range rank {
+		for r, score := range leaderBoard {
 			i++
 			if a > score {
 				if r == 1 {
@@ -54,7 +81,7 @@ func climbingLeaderboard(scores []int32, alice []int32) []int32 {
 					ranking = append(ranking, int32(r-1))
 				}
 			}
-			if i == len(rank) {
+			if i == len(leaderBoard) {
 				ranking = append(ranking, int32(r+1))
 			}
 		}
