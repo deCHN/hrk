@@ -37,19 +37,20 @@ type denseRank []int32
 
 func (dr denseRank) getRanking(score int32) int32 {
 	rank := int32(-1)
-	for r, s := range dr {
-		if score > s {
-			if r == 0 {
-				rank = 1
-			} else {
-				rank = int32(r)
-			}
+	for r, p := range dr {
+		if score > p {
+			rank = int32(r)
 		}
 	}
 
-	if rank == -1 {
-		rank = int32(len(dr) + 1)
+	if rank == 0 {
+		return 1
 	}
+
+	if rank == -1 {
+		return int32(len(dr) + 1)
+	}
+
 	return rank
 }
 
