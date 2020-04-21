@@ -57,7 +57,7 @@ func climbingLeaderboard(scores []int32, alice []int32) []int32 {
 		n := 0
 		for _, x := range rank {
 			if x != 0 {
-				rank[n] = x
+				rank[n] = x - 1 // Set back to original value
 				n++
 			}
 		}
@@ -70,11 +70,11 @@ func climbingLeaderboard(scores []int32, alice []int32) []int32 {
 	fmt.Println("leader board:", leaderBoard)
 
 	var ranking []int32
-	for _, a := range alice {
+	for _, points := range alice {
 		i := 0
 		for r, score := range leaderBoard {
 			i++
-			if a > score {
+			if points > score {
 				if r == 1 {
 					ranking = append(ranking, 1)
 				} else {
