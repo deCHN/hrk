@@ -44,7 +44,7 @@ func TestClimbingLeaderBoardInput6(t *testing.T) {
 	}
 	defer input.Close()
 
-	reader := bufio.NewReaderSize(input, 1024*1024)
+	reader := bufio.NewReaderSize(input, 10*1024*1024)
 
 	stdout, err := os.Create("./output06.txt")
 	checkError(err)
