@@ -37,6 +37,8 @@ func TestClimbingLeaderBoard(t *testing.T) {
 	}
 }
 
+// Got runtime error when testing online.
+// But local run's output matches 100% of wanted result.
 func TestClimbingLeaderBoardInput6(t *testing.T) {
 	input, err := os.Open("./input06.txt")
 	if err != nil {
