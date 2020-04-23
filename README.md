@@ -1,7 +1,6 @@
 # Ha..R..K problems
 
-Solve some puzzles as fast as I am not thinking twice.
-Or maybe...
+Solve some puzzles.. not thinking twice.
 
 ### Prerequisites
 
