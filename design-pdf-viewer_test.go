@@ -1,6 +1,8 @@
 package hrk_test
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestDesignerPdfViewer(t *testing.T) {
 	tests := []struct {
@@ -21,5 +23,12 @@ func TestDesignerPdfViewer(t *testing.T) {
 
 // https://www.hackerrank.com/challenges/designer-pdf-viewer/problem
 func designerPdfViewer(h []int32, word string) int32 {
-	return 0
+	var max int32
+
+	for _, c := range word {
+		if v := h[c-97]; v > max {
+			max = v
+		}
+	}
+	return max * int32(len(word))
 }
