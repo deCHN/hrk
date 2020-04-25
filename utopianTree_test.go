@@ -25,10 +25,9 @@ func TestUtopianTree(t *testing.T) {
 func utopianTree(n int32) int32 {
 	if n == 0 {
 		return 1
-	} else {
-		if n%2 == 0 {
-			return utopianTree(n-1) + 1
-		}
-		return utopianTree(n-1) * 2
 	}
+	if n%2 == 0 {
+		return utopianTree(n-1) + 1
+	}
+	return utopianTree(n-1) * 2
 }
