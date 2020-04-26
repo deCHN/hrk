@@ -1,0 +1,48 @@
+# Object, class and lib files
+*.[ao]
+*.class
+*.elf
+*.ko
+*.lib
+*.obj
+*.pyc
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.dylib
+*.so
+*.so.*
+
+# Executables
+*.apk
+*.app
+*.bin
+*.exe
+*.hex
+*.i*86
+*.x86_64
+
+# Debug and Test
+*.out
+*.test
+*.expand
+
+# Database and Keys
+*.db
+*.key
+
+# Swap or temp files
+*.swp
+*~
+
+# Compressed source
+*.min.js
+
+# logs
+*.log
+
+# output
+output*.txt
+
+#vscode
+.vscode
