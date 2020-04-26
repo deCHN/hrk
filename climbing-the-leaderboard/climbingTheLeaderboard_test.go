@@ -119,6 +119,7 @@ func checkError(err error) {
 type denseRank []int32
 
 func (dr denseRank) getRanking(score int32) int32 {
+
 	rank := int32(-1)
 	for r, p := range dr {
 		if score >= p {
@@ -142,10 +143,6 @@ func climbingLeaderboard(scores []int32, alice []int32) []int32 {
 
 		i := 1 // Rank starts from 1
 
-		for k, v := range scores {
-			scores[k] = v + 1 // To aviod 0 as score
-		}
-
 		for k, score := range scores {
 			if k == 0 {
 				rank[0] = score
@@ -157,16 +154,6 @@ func climbingLeaderboard(scores []int32, alice []int32) []int32 {
 			rank[i] = score
 			i++
 		}
-
-		// filter zero values away
-		n := 0
-		for _, x := range rank {
-			if x != 0 {
-				rank[n] = x - 1 // Set back to original value
-				n++
-			}
-		}
-		rank = rank[:n]
 
 		return rank
 	}
