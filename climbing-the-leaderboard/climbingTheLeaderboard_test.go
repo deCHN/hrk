@@ -134,6 +134,7 @@ func (dr denseRank) getRanking(score int32) int32 {
 	return rank + 1 //r is indexed from 0
 }
 
+//https://www.hackerrank.com/challenges/climbing-the-leaderboard/problem
 func climbingLeaderboard(scores []int32, alice []int32) []int32 {
 
 	dr := func(scores []int32) denseRank {
