@@ -1,6 +1,9 @@
 package hrk_test
 
-import "testing"
+import (
+	"sort"
+	"testing"
+)
 
 func TestAngryProfessor(t *testing.T) {
 	tests := []struct {
@@ -20,5 +23,16 @@ func TestAngryProfessor(t *testing.T) {
 }
 
 func angryProfessor(k int32, a []int32) string {
-	return ""
+	sort.Slice(a, func(i int, j int) bool { return a[i] < a[j] })
+
+	for _, v := range a {
+		if k == 0 {
+			return "NO"
+		}
+		if v > 0 {
+			return "YES"
+		}
+		k--
+	}
+	return "YES"
 }
