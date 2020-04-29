@@ -62,10 +62,7 @@ func beautifulDays(i int32, j int32, k int32) int32 {
 		df = int32(math.Abs(float64(df)))
 
 		if math.Mod(float64(df), float64(k)) == 0 {
-			fmt.Printf("%v is a beautiful day.\n", v)
 			count++
-		} else {
-			fmt.Printf("%v is not a beautiful day becasue %v/%v is not a whole number.\n", v, df, k)
 		}
 	}
 	return int32(count)
