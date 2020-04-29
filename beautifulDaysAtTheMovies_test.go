@@ -57,7 +57,7 @@ func beautifulDays(i int32, j int32, k int32) int32 {
 
 	count := 0
 
-	for v := i; v < j; v++ {
+	for v := i; v <= j; v++ {
 		df := v - reverse(v)
 		df = int32(math.Abs(float64(df)))
 
@@ -67,7 +67,6 @@ func beautifulDays(i int32, j int32, k int32) int32 {
 		} else {
 			fmt.Printf("%v is not a beautiful day becasue %v/%v is not a whole number.\n", v, df, k)
 		}
-
 	}
 	return int32(count)
 }
