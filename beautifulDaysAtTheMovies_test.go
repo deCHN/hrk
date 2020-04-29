@@ -1,7 +1,9 @@
 package hrk_test
 
 import (
+	"fmt"
 	"math"
+	"strconv"
 	"testing"
 )
 
@@ -20,11 +22,37 @@ func TestBeautifulDays(t *testing.T) {
 	}
 }
 
+func TestStringAssign(t *testing.T) {
+	str := "12340"
+	var rts []byte
+
+	size := len(str)
+	for k, _ := range str {
+		rts = append(rts, str[size-k-1])
+	}
+
+	fmt.Printf("Reverse \"%s\" -> \"%s\".\n", str, rts)
+	if v, err := strconv.Atoi(fmt.Sprintf("%s", rts)); err == nil {
+		fmt.Println(v)
+	} else {
+		fmt.Println(err)
+	}
+}
+
 func beautifulDays(i int32, j int32, k int32) int32 {
 
 	reverse := func(x int32) int32 {
+		str := strconv.Itoa(int(x))
+		var rts []byte
+		size := len(str)
 
-		return 0
+		for k, _ := range str {
+			rts = append(rts, str[size-k-1])
+		}
+
+		v, _ := strconv.Atoi(fmt.Sprintf("%s", rts))
+
+		return int32(v)
 	}
 
 	count := 0
@@ -33,8 +61,11 @@ func beautifulDays(i int32, j int32, k int32) int32 {
 		df := v - reverse(v)
 		df = int32(math.Abs(float64(df)))
 
-		if math.Mod(float64(df), float64(j)) == 0 {
+		if math.Mod(float64(df), float64(k)) == 0 {
+			fmt.Printf("%v is a beautiful day.\n", v)
 			count++
+		} else {
+			fmt.Printf("%v is not a beautiful day becasue %v/%v is not a whole number.\n", v, df, k)
 		}
 
 	}
