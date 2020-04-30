@@ -1,6 +1,9 @@
 package hrk_test
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 func TestViralAdvertising(t *testing.T) {
 	tests := []struct {
@@ -31,5 +34,21 @@ func TestViralAdvertising(t *testing.T) {
 * 5     18     9      24
  */
 func viralAdvertising(n int32) int32 {
-	return 0
+
+	sum := int32(0)
+
+	for i := int32(1); i <= n; i++ {
+		sum += liked(i)
+
+	}
+
+	return sum
+}
+
+func liked(n int32) int32 {
+	if n == 1 {
+		return 2
+	}
+
+	return int32(math.Floor(float64(liked(n-1)) * 3 / 2))
 }
