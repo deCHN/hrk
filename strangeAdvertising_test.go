@@ -13,6 +13,7 @@ func TestViralAdvertising(t *testing.T) {
 		{3, 9},
 		{4, 15},
 		{5, 24},
+		{150, 24},
 	}
 
 	for _, v := range tests {
@@ -39,7 +40,6 @@ func viralAdvertising(n int32) int32 {
 
 	for i := int32(1); i <= n; i++ {
 		sum += liked(i)
-
 	}
 
 	return sum
