@@ -13,7 +13,7 @@ func TestSaveThePrisoner(t *testing.T) {
 
 	for _, v := range tests {
 		if get := saveThePrisoner(v.n, v.m, v.s); get != v.want {
-			t.Errorf("Given %v, want %v, but %v./n", v, v.want, get)
+			t.Errorf("Given %v, want %v, but %v.\n", v, v.want, get)
 		}
 	}
 }
