@@ -6,18 +6,20 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime"
 	"strconv"
 	"strings"
 	"testing"
 )
 
-func TestSaveThePrisoner(t *testing.T) {
+func TestSaveThePrisonerTD(t *testing.T) {
 	tests := []struct {
 		n, m, s int32
 		want    int32
 	}{
-		{7, 19, 2, 6},
-		{3, 7, 3, 3},
+		//{7, 19, 2, 6},
+		//{3, 7, 3, 3},
+		{352926151, 380324688, 94730870, 1},
 	}
 
 	for _, v := range tests {
@@ -88,6 +90,18 @@ func checkError(err error) {
  * s: the chair number to start passing out treats at. 1 <= s <= n
  */
 func saveThePrisoner(n int32, m int32, s int32) int32 {
+	//            352926151
+	//r := ring.New(250000000)
+	//PrintMemUsage()
+
+	//fmt.Println(r.Len())
+
+	//r = nil
+	//PrintMemUsage()
+
+	//runtime.GC()
+	//PrintMemUsage()
+
 	r := ring.New(int(n))
 
 	for i := int32(1); i <= n; i++ {
@@ -105,4 +119,20 @@ func saveThePrisoner(n int32, m int32, s int32) int32 {
 	r = r.Move(int(m - 1))
 
 	return r.Value.(int32)
+}
+
+// PrintMemUsage outputs the current, total and OS memory being used. As well as the number
+// of garage collection cycles completed.
+func PrintMemUsage() {
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	// For info on each, see: https://golang.org/pkg/runtime/#MemStats
+	fmt.Printf("Alloc = %v MiB", bToMb(m.Alloc))
+	fmt.Printf("\tTotalAlloc = %v MiB", bToMb(m.TotalAlloc))
+	fmt.Printf("\tSys = %v MiB", bToMb(m.Sys))
+	fmt.Printf("\tNumGC = %v\n", m.NumGC)
+}
+
+func bToMb(b uint64) uint64 {
+	return b / 1024 / 1024
 }
