@@ -6,14 +6,14 @@ func TestPermutationEquation(t *testing.T) {
 	tests := []struct {
 		p, want []int32
 	}{
-		{[]int32{}, []int32{}},
+		{[]int32{}, []int32{1}},
 	}
 
 	for _, v := range tests {
 		get := permutationEquation(v.p)
-		for k, item := range get {
-			if item != v.want[k] {
-				t.Errorf("Given %v, want %v, but get %v.\n", v.p[k], v.want[k], item)
+		for k, item := range v.want {
+			if get[k] != item {
+				t.Errorf("Given %v, want %v, but get %v.\n", v.p[k], item, get[k])
 			}
 		}
 	}
