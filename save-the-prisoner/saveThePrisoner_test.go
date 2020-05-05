@@ -17,9 +17,13 @@ func TestSaveThePrisonerTD(t *testing.T) {
 		n, m, s int32
 		want    int32
 	}{
-		//{7, 19, 2, 6},
-		//{3, 7, 3, 3},
-		{352926151, 380324688, 94730870, 1},
+		{7, 19, 2, 6},
+		{3, 7, 3, 3},
+		{352926151, 380324688, 94730870, 122129406},
+		{208526924, 756265725, 150817879, 72975907},
+		{499999999, 999999998, 2, 499999999}, //2
+		{499999999, 999999998, 2, 1},         //1
+		{999999999, 999999999, 1, 999999999}, //0
 	}
 
 	for _, v := range tests {
@@ -82,6 +86,20 @@ func checkError(err error) {
 	}
 }
 
+func saveThePrisoner(n int32, m int32, s int32) int32 {
+	m = m % n
+
+	if m+s <= n {
+		return s + m - 1
+	}
+
+	if (m+s)%n-1 == 0 {
+		return s
+	}
+
+	return (m+s)%n - 1
+}
+
 /*
  * https://www.hackerrank.com/challenges/save-the-prisoner/problem
  *
@@ -89,7 +107,7 @@ func checkError(err error) {
  * m: the number of sweets. 1 <=m <= 10^9
  * s: the chair number to start passing out treats at. 1 <= s <= n
  */
-func saveThePrisoner(n int32, m int32, s int32) int32 {
+func saveThePrisonerWithRing(n int32, m int32, s int32) int32 {
 	//            352926151
 	//r := ring.New(250000000)
 	//PrintMemUsage()
