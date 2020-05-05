@@ -21,7 +21,6 @@ func TestViralAdvertising(t *testing.T) {
 			t.Errorf("Given %v, want %v, but %v.\n", v.n, v.want, get)
 		}
 	}
-
 }
 
 /*
