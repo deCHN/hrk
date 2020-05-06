@@ -29,6 +29,7 @@ func TestFindPoint(t *testing.T) {
 	}
 }
 
+// https://www.hackerrank.com/challenges/find-point/problem
 func findPoint(px int32, py int32, qx int32, qy int32) []int32 {
 	dx := qx - px + qx
 	dy := qy - py + qy
