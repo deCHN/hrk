@@ -90,20 +90,19 @@ func checkError(err error) {
 
 func saveThePrisoner(n int32, m int32, s int32) int32 {
 	m = m % n
+	var i int32
 
 	if m+s <= n {
-		i := s + m - 1
-		if i == 0 {
-			return n
-		}
-		return i
+		i = s + m - 1
+	} else {
+		i = (m+s)%n - 1
 	}
 
-	if (m+s)%n-1 == 0 {
+	if i == 0 {
 		return n
 	}
 
-	return (m+s)%n - 1
+	return i
 }
 
 /*
