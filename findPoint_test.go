@@ -1,6 +1,8 @@
 package hrk_test
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestFindPoint(t *testing.T) {
 	tests := []struct {
@@ -9,6 +11,7 @@ func TestFindPoint(t *testing.T) {
 	}{
 		{0, 0, 1, 1, []int32{2, 2}},
 		{1, 1, 2, 2, []int32{3, 3}},
+		{2, 2, 1, 1, []int32{0, 0}},
 	}
 
 	for _, v := range tests {
@@ -27,5 +30,8 @@ func TestFindPoint(t *testing.T) {
 }
 
 func findPoint(px int32, py int32, qx int32, qy int32) []int32 {
-	return nil
+	dx := qx - px + qx
+	dy := qy - py + qy
+
+	return []int32{dx, dy}
 }
