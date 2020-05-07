@@ -1,6 +1,8 @@
 package hrk_test
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestCircularArrayRotation(t *testing.T) {
 	tests := []struct {
@@ -55,15 +57,16 @@ func circularArrayRotation(a []int32, k int32, queries []int32) []int32 {
 type circularArray []int32
 
 func (a circularArray) rotate(k int32) []int32 {
-	size := len(a)
-	for i := 0; i < int(k); i++ {
-		var t []int32
-		last := a[size-1]
-		t = append(t, last)
-		a = a[:size-1]
-		t = append(t, a...)
-		a = t
-	}
+	size := int32(len(a))
+	k = k % size
 
-	return a
+	right := a[size-k:]
+	left := a[:size-k]
+
+	var out []int32
+
+	out = append(out, right...)
+	out = append(out, left...)
+
+	return out
 }
