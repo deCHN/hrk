@@ -41,7 +41,15 @@ func TestCircularArrayRotation(t *testing.T) {
  * - 0 <= X <= N-1
  */
 func circularArrayRotation(a []int32, k int32, queries []int32) []int32 {
-	return nil
+	var ca circularArray = a
+	rotate := ca.rotate(k)
+
+	var out []int32
+	for _, v := range queries {
+		out = append(out, rotate[v])
+	}
+
+	return out
 }
 
 type circularArray []int32
