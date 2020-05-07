@@ -4,10 +4,26 @@ import "testing"
 
 func TestCircularArrayRotation(t *testing.T) {
 	tests := []struct {
-		a, k, queries []int32
-		want          []int32
+		a       []int32
+		k       int32
+		queries []int32
+		want    []int32
 	}{
-		{[]int32{3, 2, 3}, []int32{1, 2, 3}, []int32{0, 1, 2}, []int32{2, 3, 1}},
+		{[]int32{1, 2, 3}, 2, []int32{0, 1, 2}, []int32{2, 3, 1}},
+	}
+
+	for _, v := range tests {
+		get := circularArrayRotation(v.a, v.k, v.queries)
+
+		if len(get) != len(v.want) {
+			t.Fatal("Test fail. Length doesn't match.")
+		}
+
+		for k, i := range v.want {
+			if i != get[k] {
+				t.Errorf("Given %v, want %v, but get %v.\n", v.a, i, get[k])
+			}
+		}
 	}
 }
 
