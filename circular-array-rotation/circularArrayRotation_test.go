@@ -11,6 +11,19 @@ func TestCircularArrayRotation(t *testing.T) {
 	}
 }
 
+/*
+ * https://www.hackerrank.com/challenges/circular-array-rotation/problem
+ * a: 包含了3个空格分隔的整数N, K 和 Q。
+ * k: 包含了N个空格分隔的整数，表示最初数组A的元素。
+ * queries: 接下来的Q行，每行包含一个整数X。
+ *
+ * Constraints:
+ * - 1 <= N <= 10**5
+ * - 1 <= A[i] <= 10**5
+ * - 1 <= K <= 10**5
+ * - 1 <= Q <= 500
+ * - 0 <= X <= N-1
+ */
 func circularArrayRotation(a []int32, k int32, queries []int32) []int32 {
 	return nil
 }
