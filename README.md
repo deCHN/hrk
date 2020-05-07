@@ -8,7 +8,7 @@ Solve some puzzles.. not thinking twice.
 
 ## Running the tests
 
-~ go test
+~ go test ./...
 
 ## Versioning
 
