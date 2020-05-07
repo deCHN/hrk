@@ -43,3 +43,19 @@ func TestCircularArrayRotation(t *testing.T) {
 func circularArrayRotation(a []int32, k int32, queries []int32) []int32 {
 	return nil
 }
+
+type circularArray []int32
+
+func (a circularArray) rotate(k int32) []int32 {
+	size := len(a)
+	for i := 0; i < int(k); i++ {
+		var t []int32
+		last := a[size-1]
+		t = append(t, last)
+		a = a[:size-1]
+		t = append(t, a...)
+		a = t
+	}
+
+	return a
+}
