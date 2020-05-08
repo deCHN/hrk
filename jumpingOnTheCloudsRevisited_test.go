@@ -18,6 +18,7 @@ func TestJumpingOnClouds(t *testing.T) {
 
 }
 
+//https://www.hackerrank.com/challenges/jumping-on-the-clouds-revisited/problem
 func jumpingOnClouds(c []int32, k int32) int32 {
 	return 0
 }
