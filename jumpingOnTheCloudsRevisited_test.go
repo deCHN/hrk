@@ -20,5 +20,19 @@ func TestJumpingOnClouds(t *testing.T) {
 
 //https://www.hackerrank.com/challenges/jumping-on-the-clouds-revisited/problem
 func jumpingOnClouds(c []int32, k int32) int32 {
-	return 0
+	n := int32(len(c))
+	e := 100
+
+	for i := int32(k); i%n != 0; i = (i + k) % n {
+		if c[i] == 1 {
+			e = e - 3
+		} else {
+			e = e - 1
+		}
+	}
+
+	if c[0] == 0 {
+		return int32(e - 1)
+	}
+	return int32(e - 3)
 }
