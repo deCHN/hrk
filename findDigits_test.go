@@ -1,6 +1,7 @@
 package hrk_test
 
 import (
+	"fmt"
 	"strconv"
 	"testing"
 )
@@ -22,13 +23,9 @@ func TestFindDigits(t *testing.T) {
 
 func findDigits(n int32) int32 {
 	ns := strconv.Itoa(int(n))
-
-	m := make(map[rune]bool)
+	count := int32(0)
 
 	for _, v := range ns {
-		if m[v] {
-			continue
-		}
 		i, err := strconv.Atoi(string(v))
 
 		if err != nil {
@@ -36,18 +33,11 @@ func findDigits(n int32) int32 {
 		}
 
 		if i != 0 && n%int32(i) == 0 {
-			m[v] = true
+			count++
 		}
 	}
 
-	var sum int32
-	for k, _ := range m {
-		i, err := strconv.Atoi(string(k))
-		if err != nil {
-			return -1
-		}
-		sum += int32(i)
-	}
+	fmt.Println(count)
 
-	return sum
+	return count
 }
