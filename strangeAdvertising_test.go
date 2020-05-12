@@ -10,10 +10,10 @@ func TestViralAdvertising(t *testing.T) {
 		n, want int32
 	}{
 		{1, 2},
+		{2, 5},
 		{3, 9},
 		{4, 15},
 		{5, 24},
-		{150, 24},
 	}
 
 	for _, v := range tests {
