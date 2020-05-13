@@ -39,64 +39,69 @@ func TestClimbingLeaderBoard(t *testing.T) {
 
 // Got runtime error when testing online.
 // But local run's output matches 100% of wanted result.
-func TestClimbingLeaderBoardInput6(t *testing.T) {
-	input, err := os.Open("./input06.txt")
-	if err != nil {
-		t.Error(err)
-	}
-	defer input.Close()
+func TestClimbingLeaderBoardInputs(t *testing.T) {
 
-	reader := bufio.NewReaderSize(input, 2*1024*1024)
-	fmt.Printf("Reader's buffer size = %v byte(s)\n", reader.Size())
+	inputs := []string{"06.txt", "07.txt"}
 
-	stdout, err := os.Create("./output06.txt")
-	checkError(err)
-
-	defer stdout.Close()
-
-	writer := bufio.NewWriterSize(stdout, 1024*1024)
-
-	scoresCount, err := strconv.ParseInt(readLine(reader), 10, 64)
-	checkError(err)
-
-	scoresTemp := strings.Split(readLine(reader), " ")
-
-	var scores []int32
-
-	for i := 0; i < int(scoresCount); i++ {
-		scoresItemTemp, err := strconv.ParseInt(scoresTemp[i], 10, 64)
-		checkError(err)
-		scoresItem := int32(scoresItemTemp)
-		scores = append(scores, scoresItem)
-	}
-
-	aliceCount, err := strconv.ParseInt(readLine(reader), 10, 64)
-	checkError(err)
-
-	aliceTemp := strings.Split(readLine(reader), " ")
-
-	var alice []int32
-
-	for i := 0; i < int(aliceCount); i++ {
-		aliceItemTemp, err := strconv.ParseInt(aliceTemp[i], 10, 64)
-		checkError(err)
-		aliceItem := int32(aliceItemTemp)
-		alice = append(alice, aliceItem)
-	}
-
-	result := climbingLeaderboard(scores, alice)
-
-	for i, resultItem := range result {
-		fmt.Fprintf(writer, "%d", resultItem)
-
-		if i != len(result)-1 {
-			fmt.Fprintf(writer, "\n")
+	for _, v := range inputs {
+		input, err := os.Open("./input" + v)
+		if err != nil {
+			t.Error(err)
 		}
+		defer input.Close()
+
+		reader := bufio.NewReaderSize(input, 2*1024*1024)
+		fmt.Printf("Reader's buffer size = %v byte(s)\n", reader.Size())
+
+		stdout, err := os.Create("./output" + v)
+		checkError(err)
+
+		defer stdout.Close()
+
+		writer := bufio.NewWriterSize(stdout, 1024*1024)
+
+		scoresCount, err := strconv.ParseInt(readLine(reader), 10, 64)
+		checkError(err)
+
+		scoresTemp := strings.Split(readLine(reader), " ")
+
+		var scores []int32
+
+		for i := 0; i < int(scoresCount); i++ {
+			scoresItemTemp, err := strconv.ParseInt(scoresTemp[i], 10, 64)
+			checkError(err)
+			scoresItem := int32(scoresItemTemp)
+			scores = append(scores, scoresItem)
+		}
+
+		aliceCount, err := strconv.ParseInt(readLine(reader), 10, 64)
+		checkError(err)
+
+		aliceTemp := strings.Split(readLine(reader), " ")
+
+		var alice []int32
+
+		for i := 0; i < int(aliceCount); i++ {
+			aliceItemTemp, err := strconv.ParseInt(aliceTemp[i], 10, 64)
+			checkError(err)
+			aliceItem := int32(aliceItemTemp)
+			alice = append(alice, aliceItem)
+		}
+
+		result := climbingLeaderboard(scores, alice)
+
+		for i, resultItem := range result {
+			fmt.Fprintf(writer, "%d", resultItem)
+
+			if i != len(result)-1 {
+				fmt.Fprintf(writer, "\n")
+			}
+		}
+
+		fmt.Fprintf(writer, "\n")
+
+		writer.Flush()
 	}
-
-	fmt.Fprintf(writer, "\n")
-
-	writer.Flush()
 }
 
 func readLine(reader *bufio.Reader) string {
