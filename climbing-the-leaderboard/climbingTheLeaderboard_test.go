@@ -98,10 +98,38 @@ func TestClimbingLeaderBoardInputs(t *testing.T) {
 			}
 		}
 
-		fmt.Fprintf(writer, "\n")
-
 		writer.Flush()
 	}
+
+	for _, v := range inputs {
+		if !compareBytes("./want"+v, "./output"+v) {
+			t.Error("Failed comparing result.")
+		}
+	}
+}
+
+func compareBytes(f1, f2 string) bool {
+
+	f, err := os.Open(f1)
+	checkError(err)
+	defer f.Close()
+
+	fc, err := os.Open(f2)
+	checkError(err)
+	defer fc.Close()
+
+	fi, err := f.Stat()
+	checkError(err)
+
+	fci, err := fc.Stat()
+	checkError(err)
+
+	if fi.Size() != fci.Size() {
+		fmt.Printf("Bytes size not same. %s=%v, %s=%v.\n", f1, fi.Size(), f2, fci.Size())
+		return false
+	}
+
+	return true
 }
 
 func readLine(reader *bufio.Reader) string {
