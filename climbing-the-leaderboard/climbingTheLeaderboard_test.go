@@ -41,9 +41,10 @@ func TestClimbingLeaderBoard(t *testing.T) {
 // But local run's output matches 100% of wanted result.
 func TestClimbingLeaderBoardInputs(t *testing.T) {
 
-	inputs := []string{"06.txt", "07.txt"}
+	inputs := []string{"06.txt", "07.txt", "08.txt", "09.txt"}
 
 	for _, v := range inputs {
+		fmt.Println("Testing with input", v, "...")
 		input, err := os.Open("./input" + v)
 		if err != nil {
 			t.Error(err)
@@ -51,7 +52,7 @@ func TestClimbingLeaderBoardInputs(t *testing.T) {
 		defer input.Close()
 
 		reader := bufio.NewReaderSize(input, 2*1024*1024)
-		fmt.Printf("Reader's buffer size = %v byte(s)\n", reader.Size())
+		//fmt.Printf("Reader's buffer size = %v byte(s)\n", reader.Size())
 
 		stdout, err := os.Create("./output" + v)
 		checkError(err)
