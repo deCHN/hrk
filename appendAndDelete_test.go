@@ -9,9 +9,9 @@ func TestAppendAndDelete(t *testing.T) {
 		s, t, want string
 		k          int32
 	}{
-		//{s: "aba", t: "aba", k: 7, want: "Yes"},
-		//{s: "hackerhappy", t: "hackerrank", k: 9, want: "Yes"},
-		//{s: "ashley", t: "ash", k: 2, want: "No"},
+		{s: "aba", t: "aba", k: 7, want: "Yes"},
+		{s: "hackerhappy", t: "hackerrank", k: 9, want: "Yes"},
+		{s: "ashley", t: "ash", k: 2, want: "No"},
 		{s: "aaaaaaaaaa", t: "aaaaa", k: 7, want: "Yes"},
 	}
 
@@ -24,10 +24,8 @@ func TestAppendAndDelete(t *testing.T) {
 
 // https://www.hackerrank.com/challenges/append-and-delete/problem
 func appendAndDelete(s string, t string, k int32) string {
-	var diff int
+	diff := len(t)
 
-	// s: abci -> len(s) - k
-	// t: abcde  -> k = 3 -> len(t) - k
 	for k, v := range t {
 		if k == len(s) {
 			diff = k
