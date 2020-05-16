@@ -10,12 +10,12 @@ func TestAppendAndDelete(t *testing.T) {
 		s, t, want string
 		k          int32
 	}{
-		//{s: "aba", t: "aba", k: 7, want: "Yes"},
-		//{s: "hackerhappy", t: "hackerrank", k: 9, want: "Yes"},
-		//{s: "ashley", t: "ash", k: 2, want: "No"},
-		//{s: "aaaaaaaaaa", t: "aaaaa", k: 7, want: "Yes"}, //case 2
-		{s: "y", t: "yu", k: 2, want: "No"},          // case 5
-		{s: "abcd", t: "abcdert", k: 10, want: "No"}, // case 10
+		{s: "aba", t: "aba", k: 7, want: "Yes"},
+		{s: "hackerhappy", t: "hackerrank", k: 9, want: "Yes"},
+		{s: "ashley", t: "ash", k: 2, want: "No"},
+		{s: "aaaaaaaaaa", t: "aaaaa", k: 7, want: "Yes"}, //case 2
+		{s: "y", t: "yu", k: 2, want: "No"},              // case 5
+		{s: "abcd", t: "abcdert", k: 10, want: "No"},     // case 10
 	}
 
 	for _, v := range tests {
@@ -45,7 +45,12 @@ func appendAndDelete(s string, t string, k int32) string {
 
 	fmt.Printf("Del: %v, Append: %v.\n", del, app)
 
-	if (del + app) <= int(k) {
+	if (del + app) == int(k) {
+		return "Yes"
+	} else if (del + app) < int(k) { // 1 < 2
+		if len(s)+len(t) > int(k) {
+			return "No"
+		}
 		return "Yes"
 	}
 
