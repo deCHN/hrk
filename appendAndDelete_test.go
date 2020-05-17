@@ -1,7 +1,7 @@
 package hrk_test
 
 import (
-	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -14,8 +14,10 @@ func TestAppendAndDelete(t *testing.T) {
 		{s: "hackerhappy", t: "hackerrank", k: 9, want: "Yes"},
 		{s: "ashley", t: "ash", k: 2, want: "No"},
 		{s: "aaaaaaaaaa", t: "aaaaa", k: 7, want: "Yes"}, //case 2
+		{s: "zzzzz", t: "zzzzzzz", k: 4, want: "Yes"},    // case 3
 		{s: "y", t: "yu", k: 2, want: "No"},              // case 5
-		{s: "abcd", t: "abcdert", k: 10, want: "No"},     // case 10
+		{s: "asdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcv", t: "asdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcv", k: 20, want: "Yes"}, // case 7
+		{s: "abcd", t: "abcdert", k: 10, want: "No"}, // case 10
 	}
 
 	for _, v := range tests {
@@ -27,6 +29,14 @@ func TestAppendAndDelete(t *testing.T) {
 
 // https://www.hackerrank.com/challenges/append-and-delete/problem
 func appendAndDelete(s string, t string, k int32) string {
+	if len(s) >= len(t) {
+		if i := strings.Index(s, t); i != -1 {
+			if i+len(t) <= int(k) {
+				return "Yes"
+			}
+		}
+	}
+
 	diff := len(t)
 
 	for k, v := range t {
@@ -43,7 +53,7 @@ func appendAndDelete(s string, t string, k int32) string {
 	del := len(s) - diff
 	app := len(t) - diff
 
-	fmt.Printf("Del: %v, Append: %v.\n", del, app)
+	//fmt.Printf("Del: %v, Append: %v.\n", del, app)
 
 	if (del + app) == int(k) {
 		return "Yes"
