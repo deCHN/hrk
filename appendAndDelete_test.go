@@ -15,6 +15,7 @@ func TestAppendAndDelete(t *testing.T) {
 		{s: "ashley", t: "ash", k: 2, want: "No"},
 		{s: "aaaaaaaaaa", t: "aaaaa", k: 7, want: "Yes"}, //case 2
 		{s: "zzzzz", t: "zzzzzzz", k: 4, want: "Yes"},    // case 3
+		{s: "awerasdf", t: "awerbsdf", k: 6, want: "No"}, // case 4
 		{s: "y", t: "yu", k: 2, want: "No"},              // case 5
 		{s: "asdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcv", t: "asdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcv", k: 20, want: "Yes"}, // case 7
 		{s: "abcd", t: "abcdert", k: 10, want: "No"}, // case 10
@@ -53,15 +54,12 @@ func appendAndDelete(s string, t string, k int32) string {
 	del := len(s) - diff
 	app := len(t) - diff
 
-	//fmt.Printf("Del: %v, Append: %v.\n", del, app)
-
-	if (del + app) == int(k) {
+	if action := (del + app); action == int(k) {
 		return "Yes"
-	} else if (del + app) < int(k) { // 1 < 2
-		if len(s)+len(t) > int(k) {
-			return "No"
+	} else if action < int(k) {
+		if d := action - int(k); d%2 == 0 { // 1 < 2
+			return "Yes"
 		}
-		return "Yes"
 	}
 
 	return "No"
