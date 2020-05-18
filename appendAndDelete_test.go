@@ -58,7 +58,10 @@ func appendAndDelete(s string, t string, k int32) string {
 	if action := (del + app); action == int(k) {
 		return "Yes"
 	} else if action < int(k) {
-		if d := action - int(k); d%2 == 0 { // 1 < 2
+		if d := action - int(k); d%2 == 0 {
+			return "Yes"
+		}
+		if len(s)+len(t) < int(k) {
 			return "Yes"
 		}
 	}
