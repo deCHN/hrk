@@ -18,7 +18,8 @@ func TestAppendAndDelete(t *testing.T) {
 		{s: "awerasdf", t: "awerbsdf", k: 6, want: "No"}, // case 4
 		{s: "y", t: "yu", k: 2, want: "No"},              // case 5
 		{s: "asdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcv", t: "asdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcvasdfqwertyuighjkzxcv", k: 20, want: "Yes"}, // case 7
-		{s: "abcd", t: "abcdert", k: 10, want: "No"}, // case 10
+		{s: "abcdef", t: "fdecba", k: 15, want: "Yes"}, //case 9
+		{s: "abcd", t: "abcdert", k: 10, want: "No"},   // case 10
 	}
 
 	for _, v := range tests {
