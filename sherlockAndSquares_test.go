@@ -18,6 +18,8 @@ func TestSquares(t *testing.T) {
 
 }
 
+// https://www.hackerrank.com/challenges/sherlock-and-squares/problem
+// 1 ≤ A ≤ B ≤ 10^9
 func squares(a int32, b int32) int32 {
 	return 0
 }
