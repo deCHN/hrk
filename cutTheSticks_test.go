@@ -3,6 +3,7 @@ package hrk_test
 import (
 	"errors"
 	"fmt"
+	"sort"
 	"testing"
 )
 
@@ -23,7 +24,24 @@ func TestCutTheSticks(t *testing.T) {
 
 // https://www.hackerrank.com/challenges/cut-the-sticks/problem
 func cutTheSticks(arr []int32) []int32 {
-	return []int32{}
+
+	// a map of stick length to the amount of the sticks with that length
+	var ln map[int32]int32
+
+	for _, v := range arr {
+		ln[v]++
+	}
+
+	sort.SliceStable(arr, func(i int, j int) bool { return arr[i] > arr[j] })
+	longest := arr[0]
+
+	r := []int32{}
+	l := int32(len(arr))
+	for i := int32(1); i <= longest; i++ {
+		r = append(r, l-ln[i])
+	}
+
+	return r
 }
 
 func CompareSlice(a, b []int32) (bool, error) {
