@@ -1,6 +1,10 @@
 package hrk_test
 
-import "testing"
+import (
+	"errors"
+	"fmt"
+	"testing"
+)
 
 func TestCutTheSticks(t *testing.T) {
 	tests := []struct {
@@ -11,8 +15,8 @@ func TestCutTheSticks(t *testing.T) {
 
 	for _, v := range tests {
 		get := cutTheSticks(v.arr)
-		if ok, err := compareSlice(v.want, get); !ok || err != nil {
-			t.Errorf("Given %v, want %v, but get %v.\n", v.arr, v.want, get)
+		if ok, err := CompareSlice(v.want, get); !ok || err != nil {
+			t.Errorf("Given %v, want %v, but get %v. %v\n", v.arr, v.want, get, err)
 		}
 	}
 }
@@ -22,6 +26,16 @@ func cutTheSticks(arr []int32) []int32 {
 	return []int32{}
 }
 
-func compareSlice(a, b []int32) (bool, error) {
+func CompareSlice(a, b []int32) (bool, error) {
+	if len(a) != len(b) {
+		return false, errors.New("Different size.")
+	}
 
+	for k, v := range a {
+		if v != b[k] {
+			return false, errors.New(fmt.Sprintf("The %d-th element of slice a is %v, slice b is %v.\n", k, v, b[k]))
+		}
+	}
+
+	return true, nil
 }
