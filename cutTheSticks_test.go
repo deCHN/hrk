@@ -26,7 +26,7 @@ func TestCutTheSticks(t *testing.T) {
 func cutTheSticks(arr []int32) []int32 {
 
 	// a map of stick length to the amount of the sticks with that length
-	var ln map[int32]int32
+	ln := make(map[int32]int32)
 
 	for _, v := range arr {
 		ln[v]++
