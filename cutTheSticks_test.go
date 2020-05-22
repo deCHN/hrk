@@ -12,7 +12,7 @@ func TestCutTheSticks(t *testing.T) {
 		arr, want []int32
 	}{
 		//{[]int32{1, 2, 3, 4, 3, 3, 2, 1}, []int32{8, 6, 4, 1}},
-		{[]int32{5, 4, 4, 2, 2, 8}, []int32{6, 4, 2, 1, 1}},
+		{[]int32{5, 4, 4, 2, 2, 8}, []int32{6, 4, 2, 1}},
 	}
 
 	for _, v := range tests {
@@ -26,28 +26,29 @@ func TestCutTheSticks(t *testing.T) {
 // https://www.hackerrank.com/challenges/cut-the-sticks/problem
 func cutTheSticks(arr []int32) []int32 {
 
-	// a map of stick length to the amount of the sticks with that length
-	ln := make(map[int32]int32)
+	sort.SliceStable(arr, func(i int, j int) bool { return arr[i] < arr[j] })
 
-	for _, v := range arr {
-		ln[v]++
-	}
-
-	sort.SliceStable(arr, func(i int, j int) bool { return arr[i] > arr[j] })
-	longest := arr[0]
-
+	l := len(arr)
+	s := int32(0)
 	r := []int32{}
-	l := int32(len(arr))
-	dropped, rest := int32(0), int32(0)
 
-	for i := int32(0); i < longest; i++ {
-		//if _, ok := ln[i]; !ok {
-		//continue
-		//}
-		dropped += ln[i]
-		rest = l - dropped
-
-		r = append(r, rest)
+	/*
+		{	2,2,4,4,5,8}
+						 1 -> 1
+						 1
+						 1
+					  1 1 -> 2
+				 1 1 1 1 -> 4
+				 1 1 1 1
+			1 1 1 1 1 1 -> 6
+			1 1 1 1 1 1
+	*/
+	for k, v := range arr {
+		if s == v {
+			continue
+		}
+		s = v
+		r = append(r, int32(l-k))
 	}
 
 	return r
