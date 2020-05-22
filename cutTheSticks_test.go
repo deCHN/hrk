@@ -12,6 +12,7 @@ func TestCutTheSticks(t *testing.T) {
 		arr, want []int32
 	}{
 		{[]int32{1, 2, 3, 4, 3, 3, 2, 1}, []int32{8, 6, 4, 1}},
+		{[]int32{5, 4, 4, 2, 2, 8}, []int32{6, 6, 4, 4, 2, 1, 1, 0}},
 	}
 
 	for _, v := range tests {
@@ -37,8 +38,13 @@ func cutTheSticks(arr []int32) []int32 {
 
 	r := []int32{}
 	l := int32(len(arr))
-	for i := int32(1); i <= longest; i++ {
-		r = append(r, l-ln[i])
+	dropped, rest := int32(0), int32(0)
+
+	for i := int32(0); i < longest; i++ {
+		dropped += ln[i]
+		rest = l - dropped
+
+		r = append(r, rest)
 	}
 
 	return r
@@ -51,7 +57,7 @@ func CompareSlice(a, b []int32) (bool, error) {
 
 	for k, v := range a {
 		if v != b[k] {
-			return false, errors.New(fmt.Sprintf("The %d-th element of slice a is %v, slice b is %v.\n", k, v, b[k]))
+			return false, errors.New(fmt.Sprintf("a[%d] = %v != b[%d] = %v.\n", k, v, k, b[k]))
 		}
 	}
 
