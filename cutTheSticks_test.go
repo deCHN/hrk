@@ -11,7 +11,7 @@ func TestCutTheSticks(t *testing.T) {
 	tests := []struct {
 		arr, want []int32
 	}{
-		//{[]int32{1, 2, 3, 4, 3, 3, 2, 1}, []int32{8, 6, 4, 1}},
+		{[]int32{1, 2, 3, 4, 3, 3, 2, 1}, []int32{8, 6, 4, 1}},
 		{[]int32{5, 4, 4, 2, 2, 8}, []int32{6, 4, 2, 1}},
 	}
 
