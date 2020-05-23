@@ -26,10 +26,11 @@ func TestNonDivisibleSubset(t *testing.T) {
 			t.Errorf("Given %v, want %v, but get %v.\n", v.s, v.want, get)
 		}
 	}
-
 }
 
 // https://www.hackerrank.com/challenges/non-divisible-subset/problem
+// Given a set of distinct integers, print the size of a maximal subset of S where
+// the sum of any 2 numbers in S' is not evenly divisible by k.
 func nonDivisibleSubset(k int32, s []int32) int32 {
 	return 0
 }
