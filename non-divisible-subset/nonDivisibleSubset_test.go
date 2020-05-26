@@ -9,14 +9,15 @@ func TestNonDivisibleSubset(t *testing.T) {
 		want int32
 	}{
 		{3, []int32{1, 7, 2, 4}, 3}, // case 0
+		{7, []int32{278, 576, 496, 727, 410, 124, 338, 149, 209, 702, 282, 718, 771, 575, 436}, 11}, // case 1
 		/*
 			The sums of all permutations of two elements from case 0 are:
-			1 + 7 = 8
-			1 + 2 = 3
-			1 + 4 = 5
-			7 + 2 = 9
+			1 + 7 = 8 -> {1, 7}
+			1 + 2 = 3 -> !2
+			1 + 4 = 5 -> {1, 4, 7}
+			7 + 2 = 9 -> !2
 			7 + 4 = 11
-			2 + 4 = 6
+			2 + 4 = 6 -> !2
 			We see that only S'={1,7,4} will not ever sum to a multiple of k=3.
 		*/
 	}
@@ -32,5 +33,16 @@ func TestNonDivisibleSubset(t *testing.T) {
 // Given a set of distinct integers, print the size of a maximal subset of S where
 // the sum of any 2 numbers in S' is not evenly divisible by k.
 func nonDivisibleSubset(k int32, s []int32) int32 {
-	return 0
+	r := make(map[int32]bool)
+
+	for i, v0 := range s {
+		for n := i + 1; n < len(s); n++ {
+			if vn := s[n]; (v0+vn)%3 != 0 {
+				r[v0] = true
+				r[vn] = true
+			}
+		}
+	}
+
+	return int32(len(r))
 }
