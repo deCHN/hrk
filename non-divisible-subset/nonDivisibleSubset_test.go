@@ -46,16 +46,27 @@ func nonDivisibleSubset(k int32, s []int32) int32 {
 					r[vn] = true
 					continue
 				}
+				ok0, okn := false, false
 				for rk, _ := range r {
-					fmt.Println("rk:", rk, "v0:", v0, "vn:", vn)
-					if (v0+rk)%3 != 0 {
-						fmt.Println("Add v0")
-						r[v0] = true
+					if (v0+rk)%3 == 0 {
+						ok0 = true
+						break
 					}
-					if (vn+rk)%3 != 0 {
-						fmt.Println("Add vn")
-						r[vn] = true
+				}
+
+				for rn, _ := range r {
+					if (vn+rn)%3 == 0 {
+						okn = true
+						break
 					}
+				}
+
+				if !ok0 {
+					r[v0] = true
+				}
+
+				if !okn {
+					r[vn] = true
 				}
 			}
 		}
