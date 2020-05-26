@@ -1,6 +1,9 @@
 package hrk_test
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestNonDivisibleSubset(t *testing.T) {
 	tests := []struct {
@@ -8,7 +11,7 @@ func TestNonDivisibleSubset(t *testing.T) {
 		s    []int32
 		want int32
 	}{
-		{3, []int32{1, 7, 2, 4}, 3}, // case 0
+		//{3, []int32{1, 7, 2, 4}, 3}, // case 0
 		{7, []int32{278, 576, 496, 727, 410, 124, 338, 149, 209, 702, 282, 718, 771, 575, 436}, 11}, // case 1
 		/*
 			The sums of all permutations of two elements from case 0 are:
@@ -38,11 +41,26 @@ func nonDivisibleSubset(k int32, s []int32) int32 {
 	for i, v0 := range s {
 		for n := i + 1; n < len(s); n++ {
 			if vn := s[n]; (v0+vn)%3 != 0 {
-				r[v0] = true
-				r[vn] = true
+				if len(r) == 0 {
+					r[v0] = true
+					r[vn] = true
+					continue
+				}
+				for rk, _ := range r {
+					fmt.Println("rk:", rk, "v0:", v0, "vn:", vn)
+					if (v0+rk)%3 != 0 {
+						fmt.Println("Add v0")
+						r[v0] = true
+					}
+					if (vn+rk)%3 != 0 {
+						fmt.Println("Add vn")
+						r[vn] = true
+					}
+				}
 			}
 		}
 	}
 
+	fmt.Println(r)
 	return int32(len(r))
 }
