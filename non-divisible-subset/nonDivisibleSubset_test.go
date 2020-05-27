@@ -27,7 +27,7 @@ func TestNonDivisibleSubset(t *testing.T) {
 	}
 
 	for _, v := range tests {
-		if get := nonDivisibleSubset(v.k, v.s); get != v.want {
+		if get := nonDivisibleSubset2(v.k, v.s); get != v.want {
 			t.Errorf("Given %v, want %v, but get %v.\n", v.s, v.want, get)
 		}
 	}
@@ -103,4 +103,18 @@ func subset(k int32, s []int32) int32 {
 	printmap(r)
 
 	return int32(len(r))
+}
+
+func nonDivisibleSubset2(k int32, s []int32) int32 {
+	r := make(map[int32]int32)
+
+	for _, v := range s {
+		r[v%3]++
+	}
+
+	if r[1] > r[2] {
+		return r[0] + r[1]
+	}
+
+	return r[0] + r[2]
 }
