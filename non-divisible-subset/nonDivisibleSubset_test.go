@@ -37,44 +37,19 @@ func TestNonDivisibleSubset(t *testing.T) {
 // Given a set of distinct integers, print the size of a maximal subset of S where
 // the sum of any 2 numbers in S' is not evenly divisible by k.
 func nonDivisibleSubset(k int32, s []int32) int32 {
-	r := make(map[int32]bool)
+	mx := int32(0)
 
-	for i, v0 := range s {
-		for n := i + 1; n < len(s); n++ {
-			if vn := s[n]; (v0+vn)%3 != 0 {
-				if len(r) == 0 {
-					r[v0] = true
-					r[vn] = true
-					continue
-				}
-				ok0, okn := false, false
-				for rk, _ := range r {
-					if (v0+rk)%3 == 0 {
-						ok0 = true
-						break
-					}
-				}
-
-				for rn, _ := range r {
-					if (vn+rn)%3 == 0 {
-						okn = true
-						break
-					}
-				}
-
-				if !ok0 {
-					r[v0] = true
-				}
-
-				if !okn {
-					r[vn] = true
-				}
-			}
-			printmap(r)
+	for i, _ := range s {
+		si := make([]int32, len(s))
+		copy(si, s)
+		si[0], si[i] = si[i], si[0]
+		fmt.Println(si)
+		if x := subset(k, si); x > mx {
+			mx = x
 		}
 	}
 
-	return int32(len(r))
+	return mx
 }
 
 func printmap(m map[int32]bool) {
@@ -85,7 +60,7 @@ func printmap(m map[int32]bool) {
 
 	sort.Slice(keys, func(i int, j int) bool { return keys[i] < keys[j] })
 
-	fmt.Println(keys)
+	fmt.Println("\t", keys, "len:", len(keys))
 }
 
 func subset(k int32, s []int32) int32 {
@@ -122,9 +97,10 @@ func subset(k int32, s []int32) int32 {
 					r[vn] = true
 				}
 			}
-			printmap(r)
 		}
 	}
+
+	printmap(r)
 
 	return int32(len(r))
 }
