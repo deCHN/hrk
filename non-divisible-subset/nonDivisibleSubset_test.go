@@ -2,6 +2,7 @@ package hrk_test
 
 import (
 	"fmt"
+	"sort"
 	"testing"
 )
 
@@ -69,9 +70,61 @@ func nonDivisibleSubset(k int32, s []int32) int32 {
 					r[vn] = true
 				}
 			}
+			printmap(r)
 		}
 	}
 
-	fmt.Println(r)
+	return int32(len(r))
+}
+
+func printmap(m map[int32]bool) {
+	keys := []int32{}
+	for k, _ := range m {
+		keys = append(keys, k)
+	}
+
+	sort.Slice(keys, func(i int, j int) bool { return keys[i] < keys[j] })
+
+	fmt.Println(keys)
+}
+
+func subset(k int32, s []int32) int32 {
+	r := make(map[int32]bool)
+
+	for i, v0 := range s {
+		for n := i + 1; n < len(s); n++ {
+			if vn := s[n]; (v0+vn)%3 != 0 {
+				if len(r) == 0 {
+					r[v0] = true
+					r[vn] = true
+					continue
+				}
+				ok0, okn := false, false
+				for rk, _ := range r {
+					if (v0+rk)%3 == 0 {
+						ok0 = true
+						break
+					}
+				}
+
+				for rn, _ := range r {
+					if (vn+rn)%3 == 0 {
+						okn = true
+						break
+					}
+				}
+
+				if !ok0 {
+					r[v0] = true
+				}
+
+				if !okn {
+					r[vn] = true
+				}
+			}
+			printmap(r)
+		}
+	}
+
 	return int32(len(r))
 }
