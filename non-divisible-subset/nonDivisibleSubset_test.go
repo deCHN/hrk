@@ -109,12 +109,24 @@ func nonDivisibleSubset2(k int32, s []int32) int32 {
 	r := make(map[int32]int32)
 
 	for _, v := range s {
-		r[v%3]++
+		r[v%k]++
 	}
 
-	if r[1] > r[2] {
-		return r[0] + r[1]
+	mx := int32(0)
+	for i := int32(1); i < int32(len(r)); i++ {
+		if x := sum(i, k, r); x > mx {
+			mx = x
+		}
 	}
+	return mx
+}
 
-	return r[0] + r[2]
+func sum(i, k int32, r map[int32]int32) int32 {
+	sum := int32(0)
+	for ir, v := range r {
+		if ir != k-i {
+			sum += v
+		}
+	}
+	return sum
 }
