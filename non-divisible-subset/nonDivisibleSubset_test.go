@@ -12,7 +12,7 @@ func TestNonDivisibleSubset(t *testing.T) {
 		s    []int32
 		want int32
 	}{
-		//{3, []int32{1, 7, 2, 4}, 3}, // case 0
+		{3, []int32{1, 7, 2, 4}, 3}, // case 0
 		{7, []int32{278, 576, 496, 727, 410, 124, 338, 149, 209, 702, 282, 718, 771, 575, 436}, 11}, // case 1
 		/*
 			The sums of all permutations of two elements from case 0 are:
@@ -112,21 +112,27 @@ func nonDivisibleSubset2(k int32, s []int32) int32 {
 		r[v%k]++
 	}
 
-	mx := int32(0)
-	for i := int32(1); i < int32(len(r)); i++ {
-		if x := sum(i, r); x > mx {
-			mx = x
-		}
-	}
-	return mx + r[0]
-}
+	set := int32(0)
+	skip := make(map[int32]bool)
 
-func sum(i int32, r map[int32]int32) int32 {
-	sum := int32(0)
-	for ir, v := range r {
-		if ir != i {
-			sum += v
+	for i, vi := range r {
+		if _, ok := skip[i]; ok {
+			continue
+		}
+
+		skip[i] = true
+
+		if vri, ok := r[k-i]; ok {
+			if vi > vri {
+				set += vi
+			} else {
+				set += vri
+			}
+			skip[k-i] = true
+		} else {
+			set += vi
 		}
 	}
-	return sum
+
+	return set
 }
