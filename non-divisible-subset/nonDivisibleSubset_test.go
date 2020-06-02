@@ -58,8 +58,6 @@ func nonDivisibleSubset(k int32, s []int32) int32 {
 			continue
 		}
 
-		skip[i] = true
-
 		if vri, ok := r[k-i]; ok {
 			if vi > vri {
 				set += vi
