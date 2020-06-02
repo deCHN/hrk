@@ -12,7 +12,7 @@ func TestNonDivisibleSubset(t *testing.T) {
 	}{
 		//{3, []int32{1, 7, 2, 4}, 3}, // case 0
 		//{7, []int32{278, 576, 496, 727, 410, 124, 338, 149, 209, 702, 282, 718, 771, 575, 436}, 11}, // case 1
-		{1, []int32{1, 2, 3, 4, 5}, 1},                 // case 6
+		//{1, []int32{1, 2, 3, 4, 5}, 1}, // case 6
 		{4, []int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 5}, // case 7
 	}
 
@@ -26,7 +26,12 @@ func TestNonDivisibleSubset(t *testing.T) {
 // https://www.hackerrank.com/challenges/non-divisible-subset/problem
 // Given a set of distinct integers, print the size of a maximal subset of S where
 // the sum of any 2 numbers in S' is not evenly divisible by k.
+// 1 <= k <= 100
 func nonDivisibleSubset(k int32, s []int32) int32 {
+	if k == 1 {
+		return 1
+	}
+
 	r := make(map[int32]int32)
 
 	for _, v := range s {
