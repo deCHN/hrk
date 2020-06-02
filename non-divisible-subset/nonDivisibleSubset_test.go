@@ -10,9 +10,9 @@ func TestNonDivisibleSubset(t *testing.T) {
 		s    []int32
 		want int32
 	}{
-		//{3, []int32{1, 7, 2, 4}, 3}, // case 0
-		//{7, []int32{278, 576, 496, 727, 410, 124, 338, 149, 209, 702, 282, 718, 771, 575, 436}, 11}, // case 1
-		//{1, []int32{1, 2, 3, 4, 5}, 1}, // case 6
+		{3, []int32{1, 7, 2, 4}, 3}, // case 0
+		{7, []int32{278, 576, 496, 727, 410, 124, 338, 149, 209, 702, 282, 718, 771, 575, 436}, 11}, // case 1
+		{1, []int32{1, 2, 3, 4, 5}, 1},                 // case 6
 		{4, []int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 5}, // case 7
 	}
 
@@ -42,6 +42,18 @@ func nonDivisibleSubset(k int32, s []int32) int32 {
 	skip := make(map[int32]bool)
 
 	for i, vi := range r {
+		// case 6
+		if i == 0 {
+			set++
+			continue
+		}
+
+		// case 7
+		if i == k-i {
+			set++
+			continue
+		}
+
 		if _, ok := skip[i]; ok {
 			continue
 		}
