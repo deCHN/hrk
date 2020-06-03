@@ -1,6 +1,10 @@
 package hrk_test
 
-import "testing"
+import (
+	"math"
+	"strings"
+	"testing"
+)
 
 func TestRepeatedString(t *testing.T) {
 	tests := []struct {
@@ -22,5 +26,21 @@ func TestRepeatedString(t *testing.T) {
 // 1 <= |s| <= 100
 // 1 <= n <= 10^12
 func repeatedString(s string, n int64) int64 {
-	return 0
+	sz := int64(len(s))
+
+	ns := int64(math.Floor(float64(n / sz)))
+
+	a := int64(strings.Count(s, "a"))
+
+	na := a * ns
+
+	as := n % sz
+
+	for i := int64(0); i < as; i++ {
+		if s[i] == 'a' {
+			na++
+		}
+	}
+
+	return na
 }
