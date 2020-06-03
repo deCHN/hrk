@@ -18,6 +18,9 @@ func TestRepeatedString(t *testing.T) {
 	}
 }
 
+// https://www.hackerrank.com/challenges/repeated-string/problem
+// 1 <= |s| <= 100
+// 1 <= n <= 10^12
 func repeatedString(s string, n int64) int64 {
 	return 0
 }
