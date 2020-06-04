@@ -7,8 +7,9 @@ func TestJumpingOnClouds(t *testing.T) {
 		c    []int32
 		want int32
 	}{
-		{[]int32{0, 0, 1, 0, 0, 1, 0}, 4},
-		{[]int32{0, 0, 0, 0, 1, 0}, 3},
+		//{[]int32{0, 0, 1, 0, 0, 1, 0}, 4},
+		//{[]int32{0, 0, 0, 0, 1, 0}, 3},
+		{[]int32{0, 0, 0, 1, 0, 0}, 3},
 	}
 
 	for _, v := range tests {
@@ -20,5 +21,22 @@ func TestJumpingOnClouds(t *testing.T) {
 }
 
 func jumpingOnClouds(c []int32) int32 {
-	return 0
+	jumps := int32(0)
+	sz := len(c)
+	for k := 0; k < sz-1; {
+		if k+2 < sz {
+			if c[k+2] != 1 {
+				k += 2
+			} else {
+				k += 1
+			}
+			jumps++
+			continue
+		}
+
+		jumps++
+		break
+	}
+
+	return jumps
 }
