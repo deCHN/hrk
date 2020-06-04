@@ -19,5 +19,18 @@ func TestEqualizeArray(t *testing.T) {
 }
 
 func equalizeArray(arr []int32) int32 {
-	return 0
+	times := make(map[int32]int)
+
+	for _, v := range arr {
+		times[v]++
+	}
+
+	max := 0
+	for _, v := range times {
+		if v > max {
+			max = v
+		}
+	}
+
+	return int32(len(arr) - max)
 }
