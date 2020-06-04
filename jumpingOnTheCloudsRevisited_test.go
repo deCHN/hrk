@@ -2,7 +2,7 @@ package hrk_test
 
 import "testing"
 
-func TestJumpingOnClouds(t *testing.T) {
+func TestJumpingOnCloudsRevisited(t *testing.T) {
 	tests := []struct {
 		c       []int32
 		k, want int32
@@ -11,7 +11,7 @@ func TestJumpingOnClouds(t *testing.T) {
 	}
 
 	for _, v := range tests {
-		if get := jumpingOnClouds(v.c, v.k); get != v.want {
+		if get := jumpingOnCloudsRevisited(v.c, v.k); get != v.want {
 			t.Errorf("Given %v, want %v, but get %v.\n", v.c, v.want, get)
 		}
 	}
@@ -19,7 +19,7 @@ func TestJumpingOnClouds(t *testing.T) {
 }
 
 //https://www.hackerrank.com/challenges/jumping-on-the-clouds-revisited/problem
-func jumpingOnClouds(c []int32, k int32) int32 {
+func jumpingOnCloudsRevisited(c []int32, k int32) int32 {
 	n := int32(len(c))
 	e := 100
 
