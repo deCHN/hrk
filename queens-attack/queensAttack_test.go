@@ -10,6 +10,7 @@ func TestQueensAttack(t *testing.T) {
 		want      int32
 	}{
 		{4, 0, 4, 4, [][]int32{nil, nil}, 9},
+		{5, 3, 4, 3, [][]int32{[]int32{5, 5}, []int32{4, 2}, []int32{2, 3}}, 10},
 	}
 
 	for _, v := range tests {
