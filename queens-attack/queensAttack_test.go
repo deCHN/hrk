@@ -20,6 +20,24 @@ func TestQueensAttack(t *testing.T) {
 	}
 }
 
+type point [2]int32
+
+func (p point) move(d dir) point {
+	return d.next(p)
+}
+
+type dir interface {
+	next(p point) point
+}
+
 func queensAttack(n int32, k int32, r_q int32, c_q int32, obstacles [][]int32) int32 {
+	orgin := point{r_q, c_q}
+
+	moves := 0
+
+	for d := range directions {
+
+	}
+
 	return 0
 }
