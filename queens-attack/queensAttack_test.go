@@ -22,22 +22,22 @@ func TestQueensAttack(t *testing.T) {
 	}
 }
 
-// row - column pair
-type point [2]int32
-
-type direction func(p point) point
-
-func SW(p point) point { return point{p[0] - 1, p[1] - 1} }
-func S(p point) point  { return point{p[0] - 1, p[1]} }
-func SE(p point) point { return point{p[0] - 1, p[1] + 1} }
-func E(p point) point  { return point{p[0], p[1] + 1} }
-func NE(p point) point { return point{p[0] + 1, p[1] + 1} }
-func N(p point) point  { return point{p[0] + 1, p[1]} }
-func NW(p point) point { return point{p[0] + 1, p[1] - 1} }
-func W(p point) point  { return point{p[0], p[1] - 1} }
-
 // https://www.hackerrank.com/challenges/queens-attack-2/problem
 func queensAttack(n int32, k int32, r_q int32, c_q int32, obstacles [][]int32) int32 {
+	// row - column pair
+	type point [2]int32
+
+	type direction func(p point) point
+
+	sw := func(p point) point { return point{p[0] - 1, p[1] - 1} }
+	south := func(p point) point { return point{p[0] - 1, p[1]} }
+	se := func(p point) point { return point{p[0] - 1, p[1] + 1} }
+	east := func(p point) point { return point{p[0], p[1] + 1} }
+	ne := func(p point) point { return point{p[0] + 1, p[1] + 1} }
+	north := func(p point) point { return point{p[0] + 1, p[1]} }
+	nw := func(p point) point { return point{p[0] + 1, p[1] - 1} }
+	west := func(p point) point { return point{p[0], p[1] - 1} }
+
 	//check checks if the point p is a valid location.
 	check := func(p point) bool {
 		if p[0] < 1 || p[1] < 1 {
@@ -61,7 +61,7 @@ func queensAttack(n int32, k int32, r_q int32, c_q int32, obstacles [][]int32) i
 		return true
 	}
 
-	var directions []direction = []direction{SW, S, SE, E, NE, N, NW, W}
+	var directions []direction = []direction{sw, south, se, east, ne, north, nw, west}
 
 	moves := int32(0)
 
