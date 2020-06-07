@@ -37,6 +37,7 @@ func N(p point) point  { return point{p[0] + 1, p[1]} }
 func NW(p point) point { return point{p[0] + 1, p[1] - 1} }
 func W(p point) point  { return point{p[0], p[1] - 1} }
 
+// https://www.hackerrank.com/challenges/queens-attack-2/problem
 func queensAttack(n int32, k int32, r_q int32, c_q int32, obstacles [][]int32) int32 {
 	//check checks if the point p is a valid location.
 	check := func(p point) bool {
