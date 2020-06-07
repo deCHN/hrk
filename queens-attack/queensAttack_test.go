@@ -1,7 +1,6 @@
 package hrk_test
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -13,7 +12,7 @@ func TestQueensAttack(t *testing.T) {
 		want      int32
 	}{
 		{4, 0, 4, 4, [][]int32{nil}, 9},
-		//{5, 3, 4, 3, [][]int32{[]int32{5, 5}, []int32{4, 2}, []int32{2, 3}}, 10},
+		{5, 3, 4, 3, [][]int32{[]int32{5, 5}, []int32{4, 2}, []int32{2, 3}}, 10},
 	}
 
 	for _, v := range tests {
@@ -41,13 +40,16 @@ func W(p point) point  { return point{p[0], p[1] - 1} }
 func queensAttack(n int32, k int32, r_q int32, c_q int32, obstacles [][]int32) int32 {
 	//check checks if the point p is a valid location.
 	check := func(p point) bool {
+		if p[0] < 1 || p[1] < 1 {
+			return false
+		}
+
 		if p[0] > n || p[1] > n {
 			return false
 		}
 
 		for _, ob := range obstacles {
 			if ob == nil {
-				fmt.Println("ob break")
 				break
 			}
 
