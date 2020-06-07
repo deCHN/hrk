@@ -38,8 +38,9 @@ func queensAttack(n int32, k int32, r_q int32, c_q int32, obstacles [][]int32) i
 	nw := func(p point) point { return point{p[0] + 1, p[1] - 1} }
 	west := func(p point) point { return point{p[0], p[1] - 1} }
 
-	//check checks if the point p is a valid location.
+	// check checks if the point p is a valid location
 	check := func(p point) bool {
+		// within the board
 		if p[0] < 1 || p[1] < 1 {
 			return false
 		}
@@ -48,6 +49,7 @@ func queensAttack(n int32, k int32, r_q int32, c_q int32, obstacles [][]int32) i
 			return false
 		}
 
+		// not on obstacles
 		for _, ob := range obstacles {
 			if ob == nil {
 				break
