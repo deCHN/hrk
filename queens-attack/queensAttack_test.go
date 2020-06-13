@@ -138,7 +138,9 @@ func TestQueenAttackInput(t *testing.T) {
 	defer want.Close()
 
 	r, err := bufio.NewReader(want).ReadString('\n')
-	checkError(err)
+	if err != io.EOF {
+		checkError(err)
+	}
 
 	if r != string(result) {
 		t.Errorf("Given input%v.txt, want %v, but get %v.\n", "13", r, result)
