@@ -1,6 +1,11 @@
 package hrk_test
 
 import (
+	"bufio"
+	"io"
+	"os"
+	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -80,4 +85,83 @@ func queensAttack(n int32, k int32, r_q int32, c_q int32, obstacles [][]int32) i
 	}
 
 	return moves
+}
+
+func TestQueenAttackInput(t *testing.T) {
+	input, err := os.Open("./input13.txt")
+	checkError(err)
+	reader := bufio.NewReaderSize(input, 1024*1024)
+
+	nk := strings.Split(readLine(reader), " ")
+
+	nTemp, err := strconv.ParseInt(nk[0], 10, 64)
+	checkError(err)
+	n := int32(nTemp)
+
+	kTemp, err := strconv.ParseInt(nk[1], 10, 64)
+	checkError(err)
+	k := int32(kTemp)
+
+	r_qC_q := strings.Split(readLine(reader), " ")
+
+	r_qTemp, err := strconv.ParseInt(r_qC_q[0], 10, 64)
+	checkError(err)
+	r_q := int32(r_qTemp)
+
+	c_qTemp, err := strconv.ParseInt(r_qC_q[1], 10, 64)
+	checkError(err)
+	c_q := int32(c_qTemp)
+
+	var obstacles [][]int32
+	for i := 0; i < int(k); i++ {
+		obstaclesRowTemp := strings.Split(readLine(reader), " ")
+
+		var obstaclesRow []int32
+		for _, obstaclesRowItem := range obstaclesRowTemp {
+			obstaclesItemTemp, err := strconv.ParseInt(obstaclesRowItem, 10, 64)
+			checkError(err)
+			obstaclesItem := int32(obstaclesItemTemp)
+			obstaclesRow = append(obstaclesRow, obstaclesItem)
+		}
+
+		if len(obstaclesRow) != int(2) {
+			panic("Bad input")
+		}
+
+		obstacles = append(obstacles, obstaclesRow)
+	}
+
+	result := queensAttack(n, k, r_q, c_q, obstacles)
+
+	want, err := os.Open("./want13.txt")
+	checkError(err)
+	defer want.Close()
+
+	r, err := bufio.NewReader(want).ReadString('\n')
+	checkError(err)
+
+	if r != string(result) {
+		t.Errorf("Given input%v.txt, want %v, but get %v.\n", "13", r, result)
+	}
+}
+
+func BenchmarkQueensAttack(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		queensAttack(5, 3, 4, 3, [][]int32{[]int32{5, 5}, []int32{4, 2}, []int32{2, 3}})
+	}
+}
+
+func readLine(reader *bufio.Reader) string {
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
+
+	return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
