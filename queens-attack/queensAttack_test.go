@@ -131,19 +131,21 @@ func TestQueenAttackInput(t *testing.T) {
 		obstacles = append(obstacles, obstaclesRow)
 	}
 
-	result := queensAttack(n, k, r_q, c_q, obstacles)
+	get := queensAttack(n, k, r_q, c_q, obstacles)
 
-	want, err := os.Open("./want13.txt")
+	f, err := os.Open("./want13.txt")
 	checkError(err)
-	defer want.Close()
+	defer f.Close()
 
-	r, err := bufio.NewReader(want).ReadString('\n')
+	r, err := bufio.NewReader(f).ReadString('\n')
 	if err != io.EOF {
 		checkError(err)
 	}
+	want, err := strconv.Atoi(r)
+	checkError(err)
 
-	if r != string(result) {
-		t.Errorf("Given input%v.txt, want %v, but get %v.\n", "13", r, result)
+	if get != int32(want) {
+		t.Errorf("Given input%v.txt, want %v, but get %v.\n", "13", want, get)
 	}
 }
 
