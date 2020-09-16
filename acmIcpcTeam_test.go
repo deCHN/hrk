@@ -41,8 +41,12 @@ func acmTeam(topic []string) []int32 {
 			}
 			if set > max {
 				max = set
+				n = 0
+			}
+			if set == max {
 				n++
 			}
+
 		}
 	}
 
