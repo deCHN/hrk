@@ -27,7 +27,6 @@ func TestMatchingStrings(t *testing.T) {
 			[2][]string{
 				{"abcde", "sdaklfj", "asdjf", "na", "basdn", "sdaklfj", "asdjf", "na", "asdjf", "na", "basdn", "sdaklfj", "asdjf"},
 				{"abcde", "sdaklfj", "asdjf", "na", "basdn"}},
-
 			[]int32{1, 3, 4, 3, 2},
 		},
 	}
