@@ -13,20 +13,20 @@ func TestMatchingStrings(t *testing.T) {
 	}{
 		{ //1
 			[2][]string{
-				[]string{"aba", "baba", "aba", "xzxb"},
-				[]string{"aba", "xzxb", "ab"}},
+				{"aba", "baba", "aba", "xzxb"},
+				{"aba", "xzxb", "ab"}},
 			[]int32{2, 1, 0},
 		},
 		{ //2
 			[2][]string{
-				[]string{"def", "de", "fgh"},
-				[]string{"de", "lmn", "fgh"}},
+				{"def", "de", "fgh"},
+				{"de", "lmn", "fgh"}},
 			[]int32{1, 0, 1},
 		},
 		{ //3
 			[2][]string{
-				[]string{"abcde", "sdaklfj", "asdjf", "na", "basdn", "sdaklfj", "asdjf", "na", "asdjf", "na", "basdn", "sdaklfj", "asdjf"},
-				[]string{"abcde", "sdaklfj", "asdjf", "na", "basdn"}},
+				{"abcde", "sdaklfj", "asdjf", "na", "basdn", "sdaklfj", "asdjf", "na", "asdjf", "na", "basdn", "sdaklfj", "asdjf"},
+				{"abcde", "sdaklfj", "asdjf", "na", "basdn"}},
 
 			[]int32{1, 3, 4, 3, 2},
 		},
