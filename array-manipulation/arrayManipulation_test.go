@@ -1,6 +1,13 @@
 package hrk
 
-import "testing"
+import (
+	"bufio"
+	"io"
+	"os"
+	"strconv"
+	"strings"
+	"testing"
+)
 
 /*
  *Devendra在9号云上看到了他的教练朝他微笑。 每次教授选出Devendra单独问他一个问题，Devendra朦胧的头脑里全是他的教练和她的微笑，以至于他无法专注于其他事情。帮助他解决这个问题：
@@ -57,4 +64,74 @@ func arrayManipulation(n int32, queries [][]int32) int64 {
 		}
 	}
 	return max
+}
+
+func TestArrayManipulationInputs(t *testing.T) {
+	inputs := []struct {
+		file string
+		want int64
+	}{
+		/* case 4 */ {"input04.txt", 7542539201},
+	}
+
+	for _, v := range inputs {
+		if get := arrayManipulationInput(v.file); get != v.want {
+			t.Errorf("Test failed. Want %d, but get %d.", v.want, get)
+		}
+	}
+}
+
+func arrayManipulationInput(file string) int64 {
+	input, err := os.Open(file)
+	checkError(err)
+
+	reader := bufio.NewReaderSize(input, 16*1024*1024)
+
+	firstMultipleInput := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+	nTemp, err := strconv.ParseInt(firstMultipleInput[0], 10, 64)
+	checkError(err)
+	n := int32(nTemp)
+
+	mTemp, err := strconv.ParseInt(firstMultipleInput[1], 10, 64)
+	checkError(err)
+	m := int32(mTemp)
+
+	var queries [][]int32
+	for i := 0; i < int(m); i++ {
+		queriesRowTemp := strings.Split(strings.TrimRight(readLine(reader), " \t\r\n"), " ")
+
+		var queriesRow []int32
+		for _, queriesRowItem := range queriesRowTemp {
+			queriesItemTemp, err := strconv.ParseInt(queriesRowItem, 10, 64)
+			checkError(err)
+			queriesItem := int32(queriesItemTemp)
+			queriesRow = append(queriesRow, queriesItem)
+		}
+
+		if len(queriesRow) != 3 {
+			panic("Bad input")
+		}
+
+		queries = append(queries, queriesRow)
+	}
+
+	result := arrayManipulation(n, queries)
+
+	return result
+}
+
+func readLine(reader *bufio.Reader) string {
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
+
+	return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
