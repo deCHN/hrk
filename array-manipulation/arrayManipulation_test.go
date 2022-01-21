@@ -33,5 +33,19 @@ func TestArrayManipulation(t *testing.T) {
  *  2. 2D_INTEGER_ARRAY queries
  */
 func arrayManipulation(n int32, queries [][]int32) int64 {
-	return 0
+	dc := make(map[int32]int32)
+
+	for _, q := range queries {
+		for i := q[0]; i <= q[1]; i++ {
+			dc[i] = dc[i] + int32(q[2])
+		}
+	}
+
+	max := int64(0)
+	for _, v := range dc {
+		if int64(v) > max {
+			max = int64(v)
+		}
+	}
+	return max
 }
