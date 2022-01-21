@@ -8,6 +8,20 @@ import "testing"
  */
 
 func TestArrayManipulation(t *testing.T) {
+	td := []struct {
+		n       int32
+		queries [][]int32
+		want    int64
+	}{
+		{5, [][]int32{{1, 2, 100}, {2, 5, 100}, {3, 4, 100}}, 200},
+	}
+
+	for k, d := range td {
+		get := arrayManipulation(d.n, d.queries)
+		if get != d.want {
+			t.Errorf("Testcase %v failed. Want: %v, but get: %v.", k, d.want, get)
+		}
+	}
 }
 
 /*
@@ -19,6 +33,5 @@ func TestArrayManipulation(t *testing.T) {
  *  2. 2D_INTEGER_ARRAY queries
  */
 func arrayManipulation(n int32, queries [][]int32) int64 {
-	// Write your code here
 	return 0
 }
