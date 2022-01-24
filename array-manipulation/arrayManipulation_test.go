@@ -2,6 +2,7 @@ package hrk
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"os"
 	"strconv"
@@ -51,7 +52,8 @@ func TestArrayManipulation(t *testing.T) {
 func arrayManipulation(n int32, queries [][]int32) int64 {
 	dc := make(map[int32]int64)
 
-	for _, q := range queries {
+	for k, q := range queries {
+		fmt.Printf("Query %d: %v.\n", k, q)
 		for i := q[0]; i <= q[1]; i++ {
 			dc[i] = dc[i] + int64(q[2])
 		}
@@ -72,8 +74,8 @@ func TestArrayManipulationInputs(t *testing.T) {
 		want int64
 	}{
 		/* case 4 */ {"input04.txt", 7542539201},
+		/* case 13 */ //{"input13.txt", 2490686975},
 	}
-
 	for _, v := range inputs {
 		if get := arrayManipulationInput(v.file); get != v.want {
 			t.Errorf("Test failed. Want %d, but get %d.", v.want, get)
