@@ -1,5 +1,15 @@
 package hrk
 
+func TestDynamicArray(t *tesitng.T) {
+	td := []struct {
+		n       int32
+		queries [][]int32
+		want    []int32
+	}{
+		{2, [][]int32{{1, 0, 5}, {1, 1, 7}, {1, 0, 3}, {2, 1, 0}, {2, 1, 1}}, []int32{7, 3}},
+	}
+}
+
 /*
  * https://www.hackerrank.com/challenges/dynamic-array/problem?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=24-hour-campaign
  * Declare a 2-dimensional array, , of  empty arrays. All arrays are zero indexed.
@@ -33,7 +43,6 @@ package hrk
  * The first line contains two space-separated integers, , the size of  to create, and , the number of queries, respectively.
  * Each of the  subsequent lines contains a query string,
  */
-
 func dynamicArray(n int32, queries [][]int32) []int32 {
 	// Write your code here
 }
