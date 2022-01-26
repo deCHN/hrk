@@ -72,7 +72,7 @@ func getMax(operations []string) []int32 {
 		case "1":
 			s, err := strconv.Atoi(v[1])
 			if err != nil {
-				fmt.Errorf("Cannot convert %v to integer.", v[1])
+				_ = fmt.Errorf("Cannot convert %v to integer.", v[1])
 				return nil
 			}
 			lifo = append(lifo, int32(s))
