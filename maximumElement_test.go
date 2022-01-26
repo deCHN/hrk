@@ -1,5 +1,12 @@
 package hrk
 
+import (
+	"fmt"
+	"strconv"
+	"strings"
+	"testing"
+)
+
 /*
  * https://www.hackerrank.com/challenges/maximum-element/problem?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=24-hour-campaign
  * You have an empty sequence, and you will be given  queries. Each query is one of these three types:
@@ -29,6 +36,24 @@ package hrk
  *
  * All queries are valid.
  */
+func TestGetMax(t *testing.T) {
+	td := []struct {
+		in   []string
+		want []int32
+	}{
+		{[]string{"1 92", "2", "1 20", "2", "1 26", "1 20", "2", "3", "1 91", "3"}, []int32{26, 91}},
+	}
+
+	for _, tc := range td {
+		get := getMax(tc.in)
+
+		for i, v := range get {
+			if v != tc.want[i] {
+				t.Errorf("Element[%d] is %v, but want %v.\n", i, v, tc.want[i])
+			}
+		}
+	}
+}
 
 /*
  * Complete the 'getMax' function below.
@@ -36,8 +61,33 @@ package hrk
  * The function is expected to return an INTEGER_ARRAY.
  * The function accepts STRING_ARRAY operations as parameter.
  */
-
 func getMax(operations []string) []int32 {
-	// Write your code here
-	return nil
+	lifo := make([]int32, 0)
+	r := make([]int32, 0)
+
+	for _, op := range operations {
+		v := strings.Split(op, " ")
+
+		switch v[0] {
+		case "1":
+			s, err := strconv.Atoi(v[1])
+			if err != nil {
+				fmt.Errorf("Cannot convert %v to integer.", v[1])
+				return nil
+			}
+			lifo = append(lifo, int32(s))
+		case "2":
+			lifo = lifo[:len(lifo)-1]
+		case "3":
+			max := int32(0)
+			for _, n := range lifo {
+				if n > max {
+					max = n
+				}
+			}
+			r = append(r, max)
+		}
+	}
+
+	return r
 }
