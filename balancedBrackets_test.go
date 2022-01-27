@@ -31,6 +31,22 @@ import "testing"
  *Each of the next  lines contains a single string , a sequence of brackets.
  */
 func TestIsBalanced(t *testing.T) {
+	td := []struct {
+		n    uint
+		in   string
+		want string
+	}{
+		{1, "{[()]}", "YES"},
+		{2, "{[(])}", "NO"},
+		{3, "{{[[(())]]}}}", "YES"},
+	}
+
+	for _, v := range td {
+		get := isBalanced(v.in)
+		if get != v.want {
+			t.Errorf("Testcase %d failed. Want %v, but get %v.\n", v.n, v.want, get)
+		}
+	}
 }
 
 /*
@@ -42,5 +58,5 @@ func TestIsBalanced(t *testing.T) {
 
 func isBalanced(s string) string {
 	// Write your code here
-	return ""
+	return "x"
 }
