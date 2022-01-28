@@ -1,6 +1,8 @@
 package hrk
 
-import "testing"
+import (
+	"testing"
+)
 
 /*
  *A bracket is considered to be any one of the following characters: (, ), {, }, [, or ].
@@ -38,7 +40,7 @@ func TestIsBalanced(t *testing.T) {
 	}{
 		{1, "{[()]}", "YES"},
 		{2, "{[(])}", "NO"},
-		{3, "{{[[(())]]}}}", "YES"},
+		{3, "{{{[[(())]]}}}", "YES"},
 	}
 
 	for _, v := range td {
@@ -57,6 +59,44 @@ func TestIsBalanced(t *testing.T) {
  */
 
 func isBalanced(s string) string {
-	// Write your code here
-	return "x"
+	balanced := make([]rune, 0)
+
+	for _, c := range s {
+		switch c {
+		case '(', '[', '{':
+			balanced = append(balanced, c)
+		case ')', ']', '}':
+			if len(balanced) == 0 {
+				return "NO"
+			}
+
+			if func(p rune, q rune) bool {
+				if p == '(' && q == ')' {
+					return true
+				} else if p == '[' && q == ']' {
+					return true
+				} else if p == '{' && q == '}' {
+					return true
+				}
+				return false
+			}(balanced[len(balanced)-1], c) {
+				balanced = balanced[:len(balanced)-1]
+			} else {
+				return "NO"
+			}
+		}
+	}
+
+	return "YES"
 }
+
+//func isPair(p rune, q rune) bool {
+//if p == '(' && q == ')' {
+//return true
+//} else if p == '[' && q == ']' {
+//return true
+//} else if p == '{' && q == '}' {
+//return true
+//}
+//return false
+//}
