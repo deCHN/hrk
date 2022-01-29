@@ -46,6 +46,8 @@ func TestIsBalanced(t *testing.T) {
 		{1, "{[()]}", "YES"},
 		{2, "{[(])}", "NO"},
 		{3, "{{{[[(())]]}}}", "YES"},
+		{4, "{(([])[])[]}[]", "NO"}, // why case 4 and 5 are not balanced??
+		{5, "{}(((){}){[]{{()()}}()})[]{{()}{(){()(){}}}}{()}({()(()({}{}()((()((([])){[][{()}{}]})))))})", "NO"},
 	}
 
 	for _, v := range td {
@@ -62,7 +64,6 @@ func TestIsBalanced(t *testing.T) {
  * The function is expected to return a STRING.
  * The function accepts STRING s as parameter.
  */
-
 func isBalanced(s string) string {
 	balanced := make([]rune, 0)
 
