@@ -2,7 +2,6 @@ package hrk
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"os"
 	"strconv"
@@ -97,28 +96,29 @@ func isBalanced(s string) string {
 }
 
 func TestIsBalancedInputs(t *testing.T) {
-	reader := bufio.NewReaderSize(os.Stdin, 16*1024*1024)
-
-	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
+	file, err := os.Open("./input04.txt")
 	checkError(err)
 
-	defer stdout.Close()
+	want, err := os.Open("./want04.txt")
+	checkError(err)
 
-	writer := bufio.NewWriterSize(stdout, 16*1024*1024)
+	reader := bufio.NewReaderSize(file, 16*1024*1024)
+	wantr := bufio.NewReader(want)
 
 	tTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
 	checkError(err)
-	t := int32(tTemp)
 
-	for tItr := 0; tItr < int(t); tItr++ {
+	ti32 := int32(tTemp)
+
+	for tItr := 0; tItr < int(ti32); tItr++ {
 		s := readLine(reader)
+		str, err := wantr.ReadBytes('\n')
+		checkError(err)
 
-		result := isBalanced(s)
-
-		fmt.Fprintf(writer, "%s\n", result)
+		if string(str) != isBalanced(s) {
+			t.Errorf("Case %d failed.", tItr)
+		}
 	}
-
-	writer.Flush()
 }
 
 func readLine(reader *bufio.Reader) string {
