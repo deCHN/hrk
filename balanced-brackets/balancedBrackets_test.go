@@ -112,7 +112,7 @@ func TestIsBalancedInputs(t *testing.T) {
 
 	for tItr := 0; tItr < int(ti32); tItr++ {
 		s := readLine(reader)
-		str, err := wantr.ReadBytes('\n')
+		str, _, err := wantr.ReadLine()
 		checkError(err)
 
 		if string(str) != isBalanced(s) {
