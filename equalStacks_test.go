@@ -1,5 +1,7 @@
 package hrk
 
+import "testing"
+
 /*
  *you have three stacks of cylinders where each cylinder has the same diameter, but they may vary in height. You can change the height of a stack by removing and discarding its topmost cylinder any number of times.
  *
@@ -35,6 +37,24 @@ package hrk
  *The fourth line contains  space-separated integers, the cylinder heights in stack . The first element is the top cylinder of the stack.
  *Constraints
  */
+func TestEqualStacks(t *testing.T) {
+	td := []struct {
+		h1   []int32
+		h2   []int32
+		h3   []int32
+		want int32
+	}{
+		{[]int32{3, 2, 1, 1}, []int32{4, 3, 2}, []int32{1, 1, 4, 1}, 5},
+	}
+
+	for k, tc := range td {
+		get := equalStacks(tc.h1, tc.h2, tc.h3)
+
+		if get != tc.want {
+			t.Errorf("Case %d failed. Want %v, but get %v.\n", k, tc.want, get)
+		}
+	}
+}
 
 /*
  * Complete the 'equalStacks' function below.
@@ -46,5 +66,5 @@ package hrk
  *  3. INTEGER_ARRAY h3
  */
 func equalStacks(h1 []int32, h2 []int32, h3 []int32) int32 {
-	// Write your code here
+	return 0
 }
