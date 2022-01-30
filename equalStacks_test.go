@@ -44,7 +44,7 @@ func TestEqualStacks(t *testing.T) {
 		h3   []int32
 		want int32
 	}{
-		{[]int32{3, 2, 1, 1}, []int32{4, 3, 2}, []int32{1, 1, 4, 1}, 5},
+		{[]int32{3, 2, 1, 1, 1}, []int32{4, 3, 2}, []int32{1, 1, 4, 1}, 5},
 	}
 
 	for k, tc := range td {
@@ -66,5 +66,33 @@ func TestEqualStacks(t *testing.T) {
  *  3. INTEGER_ARRAY h3
  */
 func equalStacks(h1 []int32, h2 []int32, h3 []int32) int32 {
+	stc1, t1 := hstack(h1)
+	stc2, t2 := hstack(h2)
+	stc3, t3 := hstack(h3)
+
+	for k, v := range stc1 {
+
+	}
+
 	return 0
+}
+
+func hstack(h []int32) (map[int32]bool, int32) {
+	var height int32
+
+	for _, v := range h {
+		height += v
+	}
+
+	r := height
+
+	hs := make(map[int32]bool)
+	hs[height] = true
+
+	for _, v := range h {
+		hs[height-v] = true
+		height = height - v
+	}
+
+	return hs, r
 }
