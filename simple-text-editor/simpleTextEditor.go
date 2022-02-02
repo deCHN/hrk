@@ -28,19 +28,16 @@ func main() {
 		case "1":
 			undo = append(undo, line)
 			line += op[1]
-			fmt.Println("append", line)
 		case "2":
 			undo = append(undo, line)
 			i, _ := strconv.Atoi(op[1])
 			line = line[:len(line)-i]
-			fmt.Println("delete", line)
 		case "3":
 			i, _ := strconv.Atoi(op[1])
-			fmt.Println("print", string(line[i-1]))
+			fmt.Println(string(line[i-1]))
 		case "4":
 			line = undo[len(undo)-1]
 			undo = undo[:(len(undo) - 1)]
-			fmt.Println("undo", line)
 		default:
 			continue
 		}
