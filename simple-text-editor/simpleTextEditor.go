@@ -19,6 +19,7 @@ import (
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	line := ""
+	undo := make
 
 	for scanner.Scan() {
 		op := strings.Split(scanner.Text(), " ")
@@ -40,4 +41,8 @@ func main() {
 			continue
 		}
 	}
+}
+
+type do struct {
+	op func
 }
