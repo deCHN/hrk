@@ -19,16 +19,18 @@ import (
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	line := ""
-	undo := make
+	undo := make([]string, 0)
 
 	for scanner.Scan() {
 		op := strings.Split(scanner.Text(), " ")
 
 		switch op[0] {
 		case "1":
+			undo = append(undo, line)
 			line += op[1]
 			fmt.Println("append", line)
 		case "2":
+			undo = append(undo, line)
 			i, _ := strconv.Atoi(op[1])
 			line = line[:len(line)-i]
 			fmt.Println("delete", line)
@@ -36,13 +38,11 @@ func main() {
 			i, _ := strconv.Atoi(op[1])
 			fmt.Println("print", string(line[i-1]))
 		case "4":
+			line = undo[len(undo)-1]
+			undo = undo[:(len(undo) - 1)]
 			fmt.Println("undo", line)
 		default:
 			continue
 		}
 	}
-}
-
-type do struct {
-	op func
 }
