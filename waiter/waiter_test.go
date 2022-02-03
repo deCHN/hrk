@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 /*
  * https://www.hackerrank.com/challenges/waiter/problem?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=24-hour-campaign
@@ -66,6 +68,7 @@ func TestWaiter(t *testing.T) {
 
 	for k, tc := range td {
 		get := waiter(tc.number, tc.q)
+		//fmt.Println("GET:", get)
 		for i, v := range get {
 			if v != tc.want[i] {
 				t.Errorf("Case %d failed. Want %v, but get %v.", k, tc.want[i], v)
@@ -89,6 +92,8 @@ func waiter(number []int32, q int32) []int32 {
 
 	for i := int32(0); i < q; i++ {
 		number = b
+		b = make([]int32, 0)
+
 		for _, v := range number {
 			if v%prm[i] == 0 {
 				answer = append(answer, v)
