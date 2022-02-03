@@ -83,5 +83,21 @@ func TestWaiter(t *testing.T) {
  *  2. INTEGER q
  */
 func waiter(number []int32, q int32) []int32 {
-	return []int32{1, 2, 3, 4, 5}
+	answer := make([]int32, 0)
+	prm := []int32{2, 3, 5, 7, 11, 13, 17, 19, 23}
+
+	for i := int32(0); i < q; i++ {
+		for k, v := range number {
+			if v%prm[i] == 0 {
+				answer = append(answer, v)
+				if k == len(number)-1 {
+					number = number[:k]
+					continue
+				}
+				number = append(number[:k], number[k+1:]...)
+			}
+		}
+	}
+
+	return append(answer, number...)
 }
