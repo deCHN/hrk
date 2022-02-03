@@ -85,19 +85,18 @@ func TestWaiter(t *testing.T) {
 func waiter(number []int32, q int32) []int32 {
 	answer := make([]int32, 0)
 	prm := []int32{2, 3, 5, 7, 11, 13, 17, 19, 23}
+	b := number
 
 	for i := int32(0); i < q; i++ {
-		for k, v := range number {
+		number = b
+		for _, v := range number {
 			if v%prm[i] == 0 {
 				answer = append(answer, v)
-				if k == len(number)-1 {
-					number = number[:k]
-					continue
-				}
-				number = append(number[:k], number[k+1:]...)
+			} else {
+				b = append(b, v)
 			}
 		}
 	}
 
-	return append(answer, number...)
+	return append(answer, b...)
 }
