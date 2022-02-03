@@ -54,7 +54,24 @@ import "testing"
  *The next line contains  space separated integers representing the initial pile of plates, i.e., .
  */
 func TestWaiter(t *testing.T) {
-	// t.Fatal("not implemented")
+	td := []struct {
+		number []int32
+		q      int32
+		want   []int32
+	}{
+		/* 1 */ {[]int32{4, 4, 9, 3, 3}, 2, []int32{4, 4, 9, 3, 3}},
+		/* 2 */ {[]int32{3, 4, 7, 6, 5}, 1, []int32{4, 6, 3, 7, 5}},
+		/* 3 */ {[]int32{2, 3, 4, 5, 6, 7}, 3, []int32{2, 4, 6, 3, 5, 7}},
+	}
+
+	for k, tc := range td {
+		get := waiter(tc.number, tc.q)
+		for i, v := range get {
+			if v != tc.want[i] {
+				t.Errorf("Case %d failed. Want %v, but get %v.", k, tc.want[i], v)
+			}
+		}
+	}
 }
 
 /*
@@ -66,6 +83,5 @@ func TestWaiter(t *testing.T) {
  *  2. INTEGER q
  */
 func waiter(number []int32, q int32) []int32 {
-	// Write your code here
-
+	return []int32{1, 2, 3, 4, 5}
 }
