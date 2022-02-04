@@ -62,7 +62,7 @@ func TestWaiter(t *testing.T) {
 		q      int32
 		want   []int32
 	}{
-		/* 1 */ {[]int32{4, 4, 9, 3, 3}, 2, []int32{4, 4, 9, 3, 3}},
+		/* 1 */ {[]int32{4, 4, 9, 3, 3}, 2, []int32{4, 4, 3, 3, 9}},
 		/* 2 */ {[]int32{3, 4, 7, 6, 5}, 1, []int32{4, 6, 3, 7, 5}},
 		/* 3 */ {[]int32{2, 3, 4, 5, 6, 7}, 3, []int32{2, 4, 6, 3, 5, 7}},
 		/* 4 */ {[]int32{3, 3, 4, 4, 9}, 2, []int32{4, 4, 9, 3, 3}},
@@ -90,20 +90,24 @@ func TestWaiter(t *testing.T) {
 func waiter(number []int32, q int32) []int32 {
 	answer := make([]int32, 0)
 	prm := []int32{2, 3, 5, 7, 11, 13, 17, 19, 23}
-	b := number
+	a := number
 
 	for i := int32(0); i < q; i++ {
-		number = b
-		b = make([]int32, 0)
+		number = a
+		a = make([]int32, 0)
 
 		for _, v := range number {
 			if v%prm[i] == 0 {
 				answer = append(answer, v)
 			} else {
-				b = append(b, v)
+				a = append([]int32{v}, a...)
 			}
 		}
 	}
 
-	return append(answer, b...)
+	for i := len(a) - 1; i >= 0; i-- {
+		answer = append(answer, a[i])
+
+	}
+	return answer
 }
