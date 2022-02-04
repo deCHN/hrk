@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -64,11 +65,12 @@ func TestWaiter(t *testing.T) {
 		/* 1 */ {[]int32{4, 4, 9, 3, 3}, 2, []int32{4, 4, 9, 3, 3}},
 		/* 2 */ {[]int32{3, 4, 7, 6, 5}, 1, []int32{4, 6, 3, 7, 5}},
 		/* 3 */ {[]int32{2, 3, 4, 5, 6, 7}, 3, []int32{2, 4, 6, 3, 5, 7}},
+		/* 4 */ {[]int32{3, 3, 4, 4, 9}, 2, []int32{4, 4, 9, 3, 3}},
 	}
 
 	for k, tc := range td {
 		get := waiter(tc.number, tc.q)
-		//fmt.Println("GET:", get)
+		fmt.Println("GET:", get)
 		for i, v := range get {
 			if v != tc.want[i] {
 				t.Errorf("Case %d failed. Want %v, but get %v.", k, tc.want[i], v)
