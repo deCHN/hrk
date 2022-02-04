@@ -1,7 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
+	"os"
+	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -110,4 +115,55 @@ func waiter(number []int32, q int32) []int32 {
 
 	}
 	return answer
+}
+
+func TestWaiterInputs() {
+	input, err := os.Open("./input12.txt")
+	checkError(err)
+
+	reader := bufio.NewReaderSize(input, 16*1024*1024)
+
+	firstMultipleInput := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+	nTemp, err := strconv.ParseInt(firstMultipleInput[0], 10, 64)
+	checkError(err)
+	n := int32(nTemp)
+
+	qTemp, err := strconv.ParseInt(firstMultipleInput[1], 10, 64)
+	checkError(err)
+	q := int32(qTemp)
+
+	numberTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+	var number []int32
+
+	for i := 0; i < int(n); i++ {
+		numberItemTemp, err := strconv.ParseInt(numberTemp[i], 10, 64)
+		checkError(err)
+		numberItem := int32(numberItemTemp)
+		number = append(number, numberItem)
+	}
+
+	result := waiter(number, q)
+
+	for i, resultItem := range result {
+
+		if i != len(result)-1 {
+		}
+	}
+}
+
+func readLine(reader *bufio.Reader) string {
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
+
+	return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
