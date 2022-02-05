@@ -117,7 +117,7 @@ func waiter(number []int32, q int32) []int32 {
 	return answer
 }
 
-func TestWaiterInputs() {
+func TestWaiterInputs(t *testing.T) {
 	input, err := os.Open("./input12.txt")
 	checkError(err)
 
@@ -146,9 +146,22 @@ func TestWaiterInputs() {
 
 	result := waiter(number, q)
 
-	for i, resultItem := range result {
+	want, err := os.Open("./want12.txt")
+	checkError(err)
 
-		if i != len(result)-1 {
+	wscanner := bufio.NewScanner(want)
+	wants := make([]int32, 0)
+
+	for wscanner.Scan() {
+		wantItem, err := strconv.Atoi(wscanner.Text())
+		checkError(err)
+
+		wants = append(wants, int32(wantItem))
+	}
+
+	for i, resultItem := range result {
+		if resultItem != wants[i] {
+			t.Errorf("Test failed. Line %d diff, want %v, but get %v.\n", i, wants[i], resultItem)
 		}
 	}
 }
