@@ -2,13 +2,18 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"io"
+	"io/ioutil"
+	"log"
 	"os"
 	"strconv"
 	"strings"
 	"testing"
 )
+
+func init() {
+	log.SetOutput(ioutil.Discard)
+}
 
 /*
  * https://www.hackerrank.com/challenges/waiter/problem?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=24-hour-campaign
@@ -75,7 +80,7 @@ func TestWaiter(t *testing.T) {
 
 	for k, tc := range td {
 		get := waiter(tc.number, tc.q)
-		fmt.Println("GET:", get)
+		log.Println("GET:", get)
 		for i, v := range get {
 			if v != tc.want[i] {
 				t.Errorf("Case %d failed. Want %v, but get %v.", k, tc.want[i], v)
@@ -95,7 +100,6 @@ func TestWaiter(t *testing.T) {
 func waiter(number []int32, q int32) []int32 {
 	answer := make([]int32, 0)
 	prm := prm(len(number))
-	//fmt.Printf("prm[%d] = %v\n", len(number), prm)
 
 	a := number
 
@@ -122,14 +126,14 @@ func waiter(number []int32, q int32) []int32 {
 // [1]->2, [2]->3, [3]->5, [4]->7, [5]->11, [6]->13, [7]->17, ...
 // The first primary number is 2, the second primary number is 3, ...
 func prm(n int) map[int]int32 {
-	fmt.Println("Caculate the first", n, "primary numbers...")
+	log.Println("Caculate the first", n, "primary numbers...")
 	iprim := make(map[int]int32)
 	iprim[1] = 2
 
 	for i := 1; i < n; i++ {
 		p, _ := iprim[i]
 		iprim[i+1] = primAfter(p)
-		fmt.Printf("%d->%v\n", i, iprim[i+1])
+		log.Printf("%d->%v\n", i, iprim[i+1])
 	}
 
 	return iprim
@@ -151,6 +155,12 @@ func isPrim(x int32) bool {
 		}
 	}
 	return true
+}
+
+func BenchmarkIsPrim10k(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		isPrim(10000)
+	}
 }
 
 func TestWaiterInputs(t *testing.T) {
