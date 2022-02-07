@@ -5,6 +5,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -157,9 +158,25 @@ func isPrim(x int32) bool {
 	return true
 }
 
+func BenchmarkIsPrim1K(b *testing.B) {
+	benchmarkIsPrim(1000, b)
+}
+
 func BenchmarkIsPrim10k(b *testing.B) {
+	benchmarkIsPrim(10*1000, b)
+}
+
+func BenchmarkIsPrim100k(b *testing.B) {
+	benchmarkIsPrim(100*1000, b)
+}
+
+func BenchmarkIsPrimMaxInt(b *testing.B) {
+	benchmarkIsPrim(math.MaxInt32, b)
+}
+
+func benchmarkIsPrim(x int32, b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		isPrim(10000)
+		isPrim(x)
 	}
 }
 
