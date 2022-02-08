@@ -7,6 +7,7 @@ import (
 	"log"
 	"math"
 	"os"
+	"reflect"
 	"strconv"
 	"strings"
 	"testing"
@@ -82,10 +83,9 @@ func TestWaiter(t *testing.T) {
 	for k, tc := range td {
 		get := waiter(tc.number, tc.q)
 		log.Println("GET:", get)
-		for i, v := range get {
-			if v != tc.want[i] {
-				t.Errorf("Case %d failed. Want %v, but get %v.", k, tc.want[i], v)
-			}
+
+		if !reflect.DeepEqual(tc.want, get) {
+			t.Errorf("Case %d failed. Want %v, but get %v.", k, tc.want, get)
 		}
 	}
 }
@@ -150,7 +150,9 @@ func primAfter(p int32) int32 {
 
 //TODO: to optimize.
 func isPrim(x int32) bool {
-	for i := int32(2); i < x; i++ { // i < squrt(x) or i in a primlist
+	const MARGIN = int32(1)
+
+	for i := int32(2); i < int32(math.Sqrt(float64(x)))+MARGIN; i++ { // i < squrt(x) or i in a primlist
 		if x%i == 0 {
 			return false
 		}
