@@ -148,7 +148,6 @@ func primAfter(p int32) int32 {
 	}
 }
 
-//TODO: to optimize.
 func isPrim(x int32) bool {
 	const MARGIN = int32(1)
 
