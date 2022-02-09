@@ -3,8 +3,9 @@ package main
 import (
 	"bufio"
 	"io"
+	"io/ioutil"
 	"log"
-	"math"
+	"math/big"
 	"os"
 	"reflect"
 	"strconv"
@@ -13,7 +14,7 @@ import (
 )
 
 func init() {
-	//log.SetOutput(ioutil.Discard)
+	log.SetOutput(ioutil.Discard)
 }
 
 /*
@@ -151,54 +152,35 @@ func prm(n int) []int32 {
 }
 
 func TestPrm(t *testing.T) {
-	for i := 1; i < 10; i++ {
-		log.Printf("%d: %v", i, prm(i))
-	}
-}
+	primaries := prm(30000)
 
-func primAfter(p int32) int32 {
-	for np := p + 1; ; np++ {
-		if isPrim(np) {
-			return np
+	for _, v := range primaries {
+		if !big.NewInt(int64(v)).ProbablyPrime(0) {
+			t.Errorf("%d is probably not a primary number.", v)
 		}
 	}
 }
 
-func isPrim(x int32) bool {
-	const MARGIN = int32(1)
-
-	for i := int32(2); i < int32(math.Sqrt(float64(x)))+MARGIN; i++ { // i < squrt(x) or i in a primlist
-		if x%i == 0 {
-			return false
-		}
-	}
-	return true
+func BenchmarkPrm1K(b *testing.B) {
+	benchmarkPrims(1000, b)
 }
 
-func BenchmarkIsPrim1K(b *testing.B) {
-	benchmarkIsPrim(1000, b)
+func BenchmarkPrm10k(b *testing.B) {
+	benchmarkPrims(10*1000, b)
 }
 
-func BenchmarkIsPrim10k(b *testing.B) {
-	benchmarkIsPrim(10*1000, b)
+func BenchmarkPrm100k(b *testing.B) {
+	benchmarkPrims(100*1000, b)
 }
 
-func BenchmarkIsPrim100k(b *testing.B) {
-	benchmarkIsPrim(100*1000, b)
-}
-
-func BenchmarkIsPrimMaxInt(b *testing.B) {
-	benchmarkIsPrim(math.MaxInt32, b)
-}
-
-func benchmarkIsPrim(x int32, b *testing.B) {
+func benchmarkPrims(x int, b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		isPrim(x)
+		prm(x)
 	}
 }
 
 func TestWaiterInputs(t *testing.T) {
-	input, err := os.Open("./input12.txt")
+	input, err := os.Open("./input6.txt")
 	checkError(err)
 
 	reader := bufio.NewReaderSize(input, 16*1024*1024)
@@ -226,7 +208,7 @@ func TestWaiterInputs(t *testing.T) {
 
 	result := waiter(number, q)
 
-	want, err := os.Open("./want12.txt")
+	want, err := os.Open("./want6.txt")
 	checkError(err)
 
 	wscanner := bufio.NewScanner(want)
