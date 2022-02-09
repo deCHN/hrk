@@ -123,32 +123,32 @@ func waiter(number []int32, q int32) []int32 {
 	return answer
 }
 
-// func prm returns the first n primary numbers in a list
+// func prm returns the first n prim numbers in a list
 func prm(n int) []int32 {
-	primaries := make([]int32, 0)
-	primaries = append(primaries, 2)
+	primes := make([]int32, 0)
+	primes = append(primes, 2, 3)
 
-	for query := 1; query < n; query++ {
-		// Find the next primary by starting from the biggest known primary
-		for next := primaries[len(primaries)-1] + 1; ; next++ {
-			//check if next is primary number
+	for query := len(primes); query < n; query++ {
+		// Find the next prim by starting from the biggest known prim
+		for next := primes[len(primes)-1] + 2; ; next++ {
+			//check if next is prim number
 			if func(n int32) bool {
-				for _, p := range primaries {
+				for _, p := range primes {
 					if n%p == 0 {
 						return false
 					}
 				}
 				return true
 			}(next) {
-				// if next is a primary number , add it to the list
-				primaries = append(primaries, next)
+				// if next is a prim number , add it to the list
+				primes = append(primes, next)
 				// and start the next query
 				break
 			}
 		}
 	}
 
-	return primaries // [2,3,5,7,11,...]
+	return primes // [2,3,5,7,11,...]
 }
 
 func TestPrm(t *testing.T) {
@@ -156,7 +156,7 @@ func TestPrm(t *testing.T) {
 
 	for _, v := range primaries {
 		if !big.NewInt(int64(v)).ProbablyPrime(0) {
-			t.Errorf("%d is probably not a primary number.", v)
+			t.Errorf("%d is probably not a prim number.", v)
 		}
 	}
 }
@@ -180,7 +180,7 @@ func benchmarkPrims(x int, b *testing.B) {
 }
 
 func TestWaiterInputs(t *testing.T) {
-	input, err := os.Open("./input6.txt")
+	input, err := os.Open("./input12.txt")
 	checkError(err)
 
 	reader := bufio.NewReaderSize(input, 16*1024*1024)
@@ -208,7 +208,7 @@ func TestWaiterInputs(t *testing.T) {
 
 	result := waiter(number, q)
 
-	want, err := os.Open("./want6.txt")
+	want, err := os.Open("./want12.txt")
 	checkError(err)
 
 	wscanner := bufio.NewScanner(want)
