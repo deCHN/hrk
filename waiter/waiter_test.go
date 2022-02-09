@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"io"
-	"io/ioutil"
 	"log"
 	"math"
 	"os"
@@ -14,7 +13,7 @@ import (
 )
 
 func init() {
-	log.SetOutput(ioutil.Discard)
+	//log.SetOutput(ioutil.Discard)
 }
 
 /*
@@ -100,11 +99,11 @@ func TestWaiter(t *testing.T) {
  */
 func waiter(number []int32, q int32) []int32 {
 	answer := make([]int32, 0)
-	prm := prm(len(number))
+	prm := prm(int(q)) // 32bit -> 32bit or 64bit depends on maschin
 
 	a := number
 
-	for i := 1; i <= int(q); i++ {
+	for i := 0; i < int(q); i++ {
 		number = a
 		a = make([]int32, 0)
 
@@ -123,21 +122,38 @@ func waiter(number []int32, q int32) []int32 {
 	return answer
 }
 
-// func prm returns a dictionary which contains the first i primary number:
-// [1]->2, [2]->3, [3]->5, [4]->7, [5]->11, [6]->13, [7]->17, ...
-// The first primary number is 2, the second primary number is 3, ...
-func prm(n int) map[int]int32 {
-	log.Println("Caculate the first", n, "primary numbers...")
-	iprim := make(map[int]int32)
-	iprim[1] = 2
+// func prm returns the first n primary numbers in a list
+func prm(n int) []int32 {
+	primaries := make([]int32, 0)
+	primaries = append(primaries, 2)
 
-	for i := 1; i < n; i++ {
-		p, _ := iprim[i]
-		iprim[i+1] = primAfter(p)
-		log.Printf("%d->%v\n", i, iprim[i+1])
+	for query := 1; query < n; query++ {
+		// Find the next primary by starting from the biggest known primary
+		for next := primaries[len(primaries)-1] + 1; ; next++ {
+			//check if next is primary number
+			if func(n int32) bool {
+				for _, p := range primaries {
+					if n%p == 0 {
+						return false
+					}
+				}
+				return true
+			}(next) {
+				// if next is a primary number , add it to the list
+				primaries = append(primaries, next)
+				// and start the next query
+				break
+			}
+		}
 	}
 
-	return iprim
+	return primaries // [2,3,5,7,11,...]
+}
+
+func TestPrm(t *testing.T) {
+	for i := 1; i < 10; i++ {
+		log.Printf("%d: %v", i, prm(i))
+	}
 }
 
 func primAfter(p int32) int32 {
