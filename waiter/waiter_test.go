@@ -137,6 +137,9 @@ func prm(n int) []int32 {
 					if n%p == 0 {
 						return false
 					}
+					if p*p > n {
+						return true
+					}
 				}
 				return true
 			}(next) {
