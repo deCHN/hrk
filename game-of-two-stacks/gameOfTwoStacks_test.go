@@ -1,5 +1,7 @@
 package main
 
+import "testing"
+
 /* Alexa has two stacks of non-negative integers, stack  and stack  where index  denotes the top of the stack. Alexa challenges Nick to play the following game:
 
 In each move, Nick can remove one integer from the top of either stack  or stack .
@@ -32,11 +34,27 @@ The first line contains an integer,  (the number of games). The  subsequent line
 The first line contains three space-separated integers describing the respective values of  (the number of integers in stack ),  (the number of integers in stack ), and  (the number that the sum of the integers removed from the two stacks cannot exceed).
 The second line contains  space-separated integers, the respective values of .
 The third line contains  space-separated integers, the respective values of .
-
-func TestHelloWorld(t *testing.T) {
-	// t.Fatal("not implemented")
-}
 */
+
+func TestTwoStacks(t *testing.T) {
+	td := []struct {
+		max  int32
+		a    []int32
+		b    []int32
+		want int32
+	}{
+		/* 1 */ {10, []int32{1, 2, 3, 4, 5}, []int32{6, 7, 8, 9}, 4},
+		/* 2 */ {10, []int32{4, 2, 4, 6, 1}, []int32{2, 1, 8, 5}, 4},
+	}
+
+	for ti, v := range td {
+		get := twoStacks(v.max, v.a, v.b)
+
+		if get != v.want {
+			t.Errorf("Testcase %d failed. Want %v but get %v.", ti+1, v.want, get)
+		}
+	}
+}
 
 /*
  * Complete the 'twoStacks' function below.
@@ -48,6 +66,34 @@ func TestHelloWorld(t *testing.T) {
  *  3. INTEGER_ARRAY b
  */
 func twoStacks(maxSum int32, a []int32, b []int32) int32 {
-	// Write your code here
-	return 0
+	la := len(a)
+	lb := len(b)
+
+	ai := 0
+	bi := 0
+
+	sum := int32(0)
+	var n int32
+
+	for n = 0; sum <= 10; n++ {
+		if ai < la && bi < lb {
+			if a[ai] < b[bi] {
+				ai++
+				sum += a[ai]
+			} else {
+				bi++
+				sum += b[bi]
+			}
+		} else if ai < la {
+			ai++
+			sum += a[ai]
+		} else if bi < lb {
+			bi++
+			sum += b[bi]
+		} else {
+			break
+		}
+	}
+
+	return n
 }
