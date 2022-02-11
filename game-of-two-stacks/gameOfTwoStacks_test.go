@@ -75,24 +75,28 @@ func twoStacks(maxSum int32, a []int32, b []int32) int32 {
 	sum := int32(0)
 	var n int32
 
-	for n = 0; sum <= 10; n++ {
+	for n = 0; sum < 10; n++ {
 		if ai < la && bi < lb {
 			if a[ai] < b[bi] {
-				ai++
 				sum += a[ai]
+				ai++
 			} else {
-				bi++
 				sum += b[bi]
+				bi++
 			}
 		} else if ai < la {
-			ai++
 			sum += a[ai]
+			ai++
 		} else if bi < lb {
-			bi++
 			sum += b[bi]
+			bi++
 		} else {
 			break
 		}
+	}
+
+	if sum > 10 {
+		return n - 1
 	}
 
 	return n
