@@ -1,6 +1,13 @@
 package main
 
-import "testing"
+import (
+	"bufio"
+	"io"
+	"os"
+	"strconv"
+	"strings"
+	"testing"
+)
 
 /* Alexa has two stacks of non-negative integers, stack  and stack  where index  denotes the top of the stack. Alexa challenges Nick to play the following game:
 
@@ -45,6 +52,7 @@ func TestTwoStacks(t *testing.T) {
 	}{
 		/* 1 */ {10, []int32{1, 2, 3, 4, 5}, []int32{6, 7, 8, 9}, 4},
 		/* 2 */ {10, []int32{4, 2, 4, 6, 1}, []int32{2, 1, 8, 5}, 4},
+		/* 3 */ {62, []int32{7, 15, 12, 0, 5, 18, 17, 2, 10, 15, 4, 2, 9, 15, 13, 12, 16}, []int32{12, 16, 6, 8, 16, 15, 18, 3, 11, 0, 17, 7, 6, 11, 14, 13, 15, 6, 18, 6, 16, 12, 16, 11, 16, 11}, 6},
 	}
 
 	for ti, v := range td {
@@ -100,4 +108,71 @@ func twoStacks(maxSum int32, a []int32, b []int32) int32 {
 	}
 
 	return n
+}
+
+func TestTwoStacksInputs() {
+	input, err := os.Open("./input01.txt")
+	checkError(err)
+
+	reader := bufio.NewReader(input)
+	gTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+	checkError(err)
+	g := int32(gTemp)
+
+	for gItr := 0; gItr < int(g); gItr++ {
+		firstMultipleInput := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+		nTemp, err := strconv.ParseInt(firstMultipleInput[0], 10, 64)
+		checkError(err)
+		n := int32(nTemp)
+
+		mTemp, err := strconv.ParseInt(firstMultipleInput[1], 10, 64)
+		checkError(err)
+		m := int32(mTemp)
+
+		maxSumTemp, err := strconv.ParseInt(firstMultipleInput[2], 10, 64)
+		checkError(err)
+		maxSum := int32(maxSumTemp)
+
+		aTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+		var a []int32
+
+		for i := 0; i < int(n); i++ {
+			aItemTemp, err := strconv.ParseInt(aTemp[i], 10, 64)
+			checkError(err)
+			aItem := int32(aItemTemp)
+			a = append(a, aItem)
+		}
+
+		bTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+		var b []int32
+
+		for i := 0; i < int(m); i++ {
+			bItemTemp, err := strconv.ParseInt(bTemp[i], 10, 64)
+			checkError(err)
+			bItem := int32(bItemTemp)
+			b = append(b, bItem)
+		}
+
+		result := twoStacks(maxSum, a, b)
+
+	}
+
+}
+
+func readLine(reader *bufio.Reader) string {
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
+
+	return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
