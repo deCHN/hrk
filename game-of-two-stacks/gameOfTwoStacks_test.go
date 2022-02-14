@@ -110,7 +110,7 @@ func twoStacks(maxSum int32, a []int32, b []int32) int32 {
 	return n
 }
 
-func TestTwoStacksInputs() {
+func TestTwoStacksInputs(t *testing.T) {
 	input, err := os.Open("./input01.txt")
 	checkError(err)
 
@@ -118,6 +118,11 @@ func TestTwoStacksInputs() {
 	gTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
 	checkError(err)
 	g := int32(gTemp)
+
+	want, err := os.Open("./want01.txt")
+	checkError(err)
+
+	scanner := bufio.NewScanner(want)
 
 	for gItr := 0; gItr < int(g); gItr++ {
 		firstMultipleInput := strings.Split(strings.TrimSpace(readLine(reader)), " ")
@@ -157,9 +162,14 @@ func TestTwoStacksInputs() {
 		}
 
 		result := twoStacks(maxSum, a, b)
+		if !scanner.Scan() {
+			t.Fatal("Inputs and wants doesn't match.")
+		}
 
+		if string(result) != scanner.Text() {
+			t.Fatalf("Testcase %d failed. Want %v but get %v.", gItr, scanner.Text(), result)
+		}
 	}
-
 }
 
 func readLine(reader *bufio.Reader) string {
