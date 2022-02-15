@@ -166,7 +166,7 @@ func TestTwoStacksInputs(t *testing.T) {
 
 		result := twoStacks(maxSum, a, b)
 		if !scanner.Scan() {
-			t.Fatal("Inputs and wants doesn't match.")
+			t.Fatal("Indexes of inputs differ from wants.")
 		}
 
 		get := strconv.Itoa(int(result))
