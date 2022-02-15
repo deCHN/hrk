@@ -60,9 +60,9 @@ func TestTwoStacks(t *testing.T) {
 		get := twoStacks(v.max, v.a, v.b)
 
 		if get != v.want {
-			t.Errorf("Case %d ❌\t want %v but get %v.", ti+1, v.want, get)
+			t.Errorf("Case %d ✗\t want %v but get %v.", ti+1, v.want, get)
 		} else {
-			t.Logf("Case %d ✅", ti+1)
+			t.Logf("Case %d ✔", ti+1)
 		}
 	}
 }
@@ -172,10 +172,10 @@ func TestTwoStacksInputs(t *testing.T) {
 		get := strconv.Itoa(int(result))
 
 		if get != scanner.Text() {
-			t.Errorf("Case %d ❌\twant %#v but get %#v.", gItr+1, scanner.Text(), get)
+			t.Errorf("Case %d ✗\twant %#v but get %#v.", gItr+1, scanner.Text(), get)
 		}
 
-		t.Logf("Case %d ✅", gItr+1)
+		t.Logf("Case %d ✔", gItr+1)
 	}
 }
 
