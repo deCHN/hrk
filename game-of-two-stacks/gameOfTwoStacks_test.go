@@ -50,17 +50,19 @@ func TestTwoStacks(t *testing.T) {
 		b    []int32
 		want int32
 	}{
-		///* 1 */ {10, []int32{1, 2, 3, 4, 5}, []int32{6, 7, 8, 9}, 4},
-		///* 2 */ {10, []int32{4, 2, 4, 6, 1}, []int32{2, 1, 8, 5}, 4},
-		///* 3 */ {62, []int32{7, 15, 12, 0, 5, 18, 17, 2, 10, 15, 4, 2, 9, 15, 13, 12, 16}, []int32{12, 16, 6, 8, 16, 15, 18, 3, 11, 0, 17, 7, 6, 11, 14, 13, 15, 6, 18, 6, 16, 12, 16, 11, 16, 11}, 6},
-		{67, []int32{19, 9, 8, 13, 1, 7, 18, 0, 19, 19, 10, 5, 15, 19, 0, 0, 16, 12, 5, 10}, []int32{11, 17, 1, 18, 14, 12, 9, 18, 14, 3, 4, 13, 4, 12, 6, 5, 12, 16, 5, 11, 16, 8, 16, 3, 7, 8, 3, 3, 0, 1, 13, 4, 10, 7, 14}, 6},
+		/* 1 */ {10, []int32{1, 2, 3, 4, 5}, []int32{6, 7, 8, 9}, 4},
+		/* 2 */ {10, []int32{4, 2, 4, 6, 1}, []int32{2, 1, 8, 5}, 4},
+		/* 3 */ {62, []int32{7, 15, 12, 0, 5, 18, 17, 2, 10, 15, 4, 2, 9, 15, 13, 12, 16}, []int32{12, 16, 6, 8, 16, 15, 18, 3, 11, 0, 17, 7, 6, 11, 14, 13, 15, 6, 18, 6, 16, 12, 16, 11, 16, 11}, 6},
+		/* 4 */ {67, []int32{19, 9, 8, 13, 1, 7, 18, 0, 19, 19, 10, 5, 15, 19, 0, 0, 16, 12, 5, 10}, []int32{11, 17, 1, 18, 14, 12, 9, 18, 14, 3, 4, 13, 4, 12, 6, 5, 12, 16, 5, 11, 16, 8, 16, 3, 7, 8, 3, 3, 0, 1, 13, 4, 10, 7, 14}, 6},
 	}
 
 	for ti, v := range td {
 		get := twoStacks(v.max, v.a, v.b)
 
 		if get != v.want {
-			t.Errorf("Testcase %d failed. Want %v but get %v.", ti+1, v.want, get)
+			t.Errorf("Case %d ❌\t want %v but get %v.", ti+1, v.want, get)
+		} else {
+			t.Logf("Case %d ✅", ti+1)
 		}
 	}
 }
@@ -170,10 +172,10 @@ func TestTwoStacksInputs(t *testing.T) {
 		get := strconv.Itoa(int(result))
 
 		if get != scanner.Text() {
-			t.Fatalf("Testcase %d failed. Want %#v but get %#v.", gItr+1, scanner.Text(), get)
+			t.Errorf("Case %d ❌\twant %#v but get %#v.", gItr+1, scanner.Text(), get)
 		}
 
-		t.Logf("Case %d ✅\t want: %v get: %v.", gItr+1, scanner.Text(), get)
+		t.Logf("Case %d ✅", gItr+1)
 	}
 }
 
