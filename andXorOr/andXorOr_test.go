@@ -1,10 +1,12 @@
 package hrk
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 /*
- *Given an array  of  distinct elements. Let  and  be the smallest and the next smallest element in the interval  where .
- *
+ *Given an array A[] of N distinct elements. Let M1 and M2 be the smallest and the next smallest element in the interval [L, R] where 1 <= L < R <= N.
  *.
  *
  *where , are the bitwise operators ,  and  respectively.
@@ -27,7 +29,7 @@ func TestAndXorOr(t *testing.T) {
 		get := andXorOr(tc.a)
 
 		if get != tc.want {
-			t.Errorf("Case %d -\t want %v, but get %v.", i+1, tc.want, get)
+			t.Errorf("Case %d failed. Want %v, but get %v.", i+1, tc.want, get)
 		}
 	}
 }
@@ -39,5 +41,13 @@ func TestAndXorOr(t *testing.T) {
  * The function accepts INTEGER_ARRAY a as parameter.
  */
 func andXorOr(a []int32) int32 {
+	o := 9 & 6
+	p := 9 | 6
+	q := 9 ^ 6
+	fmt.Println("9 and 6", o)
+	fmt.Println("9 or 6", p)
+	fmt.Println("9 xor 6", q)
+	fmt.Println("o xor p and q", o^p&q)
+
 	return 0
 }
