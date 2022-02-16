@@ -5,17 +5,19 @@ import (
 	"testing"
 )
 
-/*
- *Given an array A[] of N distinct elements. Let M1 and M2 be the smallest and the next smallest element in the interval [L, R] where 1 <= L < R <= N.
+/**
+ * https://www.hackerrank.com/challenges/and-xor-or/problem
+ *
+ * Given an array A[] of N distinct elements. Let M1 and M2 be the smallest and the next smallest element in the interval [L, R] where 1 <= L < R <= N.
  *.
  *
- *where , are the bitwise operators ,  and  respectively.
- *Your task is to find the maximum possible value of .
+ * where , are the bitwise operators ,  and  respectively.
+ * Your task is to find the maximum possible value of .
  *
- *Input Format
+ * Input Format
  *
- *First line contains integer .
- *Second line contains  integers, representing elements of the array .
+ * First line contains integer .
+ * Second line contains  integers, representing elements of the array .
  */
 func TestAndXorOr(t *testing.T) {
 	td := []struct {
