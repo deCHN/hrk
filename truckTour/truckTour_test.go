@@ -24,7 +24,20 @@ import (
  */
 
 func TestTruckTour(t *testing.T) {
+	td := []struct {
+		petrolpumps [][]int32
+		want        int32
+	}{
+		{[][]int32{[]int32{1, 5}, []int32{10, 3}, []int32{3, 4}}, 1},
+	}
 
+	for i, tc := range td {
+		get := truckTour(tc.petrolpumps)
+
+		if get != tc.want {
+			t.Errorf("Case %d failed. Want %d, but get %d.", i+1, tc.want, get)
+		}
+	}
 }
 
 /*
@@ -34,7 +47,6 @@ func TestTruckTour(t *testing.T) {
  * The function accepts 2D_INTEGER_ARRAY petrolpumps as parameter.
  */
 func truckTour(petrolpumps [][]int32) int32 {
-
 	return 0
 }
 
