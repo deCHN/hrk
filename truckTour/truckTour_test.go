@@ -32,7 +32,10 @@ func TestTruckTour(t *testing.T) {
 		petrolpumps [][]int32
 		want        int32
 	}{
-		{[][]int32{{1, 5}, {10, 3}, {3, 4}}, 1},
+		/* 1 */ {[][]int32{{1, 5}, {10, 3}, {3, 4}}, 1},
+		/* 2 */ {[][]int32{{1, 5}, {3, 4}, {10, 3}}, 2},
+		/* 3 */ {[][]int32{{3, 4}, {10, 3}, {1, 5}}, 1},
+		/* 4 */ {[][]int32{{10, 3}, {1, 5}, {3, 4}}, 0},
 	}
 
 	for i, tc := range td {
@@ -51,8 +54,6 @@ func TestTruckTour(t *testing.T) {
  * The function accepts 2D_INTEGER_ARRAY petrolpumps as parameter.
  */
 func truckTour(petrolpumps [][]int32) int32 {
-	// Go through the pump stations, check if the station has enough petrol to reach the next station
-	// If yes, mark the station index; Make this station the first station; Continue check if it can reach the next station with added up ful.
 	for k := range petrolpumps {
 		route := make([][]int32, 0)
 		route = append(route, petrolpumps[k:]...)
