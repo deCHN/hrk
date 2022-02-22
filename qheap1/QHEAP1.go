@@ -1,10 +1,11 @@
-package hrk
+package main
 
 import (
 	"bufio"
 	"fmt"
 	"os"
-	"testing"
+	"strconv"
+	"strings"
 )
 
 /*
@@ -26,10 +27,31 @@ import (
  * Each of the next Q lines contains one of the 3 types of query.
  */
 
-func TestQHEAP1(t *testing.T) {
-	rin := bufio.NewScanner(os.Stdin)
+func main() {
 
-	for rin.Scan() {
-		fmt.Println(rin.Text())
+	scanner := bufio.NewScanner(os.Stdin)
+	line := ""
+	undo := make([]string, 0)
+
+	for scanner.Scan() {
+		op := strings.Split(scanner.Text(), " ")
+
+		switch op[0] {
+		case "1":
+			undo = append(undo, line)
+			line += op[1]
+		case "2":
+			undo = append(undo, line)
+			i, _ := strconv.Atoi(op[1])
+			line = line[:len(line)-i]
+		case "3":
+			i, _ := strconv.Atoi(op[1])
+			fmt.Println(string(line[i-1]))
+		case "4":
+			line = undo[len(undo)-1]
+			undo = undo[:(len(undo) - 1)]
+		default:
+			continue
+		}
 	}
 }
