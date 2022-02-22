@@ -1,6 +1,11 @@
 package hrk
 
-import "testing"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"testing"
+)
 
 /*
  * https://www.hackerrank.com/challenges/qheap1/problem
@@ -22,5 +27,9 @@ import "testing"
  */
 
 func TestQHEAP1(t *testing.T) {
+	rin := bufio.NewScanner(os.Stdin)
 
+	for rin.Scan() {
+		fmt.Println(rin.Text())
+	}
 }
