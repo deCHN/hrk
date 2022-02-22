@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -28,28 +29,26 @@ import (
  */
 
 func main() {
-
 	scanner := bufio.NewScanner(os.Stdin)
-	line := ""
-	undo := make([]string, 0)
+	nums := make(map[string]bool)
 
 	for scanner.Scan() {
 		op := strings.Split(scanner.Text(), " ")
 
 		switch op[0] {
 		case "1":
-			undo = append(undo, line)
-			line += op[1]
+			nums[op[1]] = true
 		case "2":
-			undo = append(undo, line)
-			i, _ := strconv.Atoi(op[1])
-			line = line[:len(line)-i]
+			delete(nums, op[1])
 		case "3":
-			i, _ := strconv.Atoi(op[1])
-			fmt.Println(string(line[i-1]))
-		case "4":
-			line = undo[len(undo)-1]
-			undo = undo[:(len(undo) - 1)]
+			min := math.MaxInt
+			for s := range nums {
+				i, _ := strconv.Atoi(s)
+				if i < min {
+					min = i
+				}
+			}
+			fmt.Println(min)
 		default:
 			continue
 		}
